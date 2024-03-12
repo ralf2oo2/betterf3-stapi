@@ -3,14 +3,20 @@ import joptsimple.internal.Strings;
 import net.minecraft.class_564;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.hud.InGameHud;
+import net.minecraft.client.resource.language.TranslationStorage;
 import org.spongepowered.asm.mixin.Debug;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import ralf2oo2.betterf3.modules.BaseModule;
+import ralf2oo2.betterf3.utils.ITextRenderer;
+import ralf2oo2.betterf3.utils.Text;
+import ralf2oo2.betterf3.utils.TextSection;
 import ralf2oo2.betterf3.utils.Utils;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -18,6 +24,48 @@ import java.util.List;
 public class InGameHudMixin {
 	private boolean originalDebugHudValue;
 	@Shadow private Minecraft minecraft;
+
+	public List<Text> getNewLeftText(){
+		List<Text> list = new ArrayList<>();
+
+		for (BaseModule module : BaseModule.modules) {
+			if (!module.enabled) {
+				continue;
+			}
+			module.update(minecraft);
+
+			// Change this to check for reduced debug
+			list.addAll(module.getLinesFormatted(false));
+
+			// Change this to check for spaced lines
+			if (false) {
+				list.add(new Text(""));
+			}
+		}
+
+		return list;
+	}
+
+	public List<Text> getNewRightText(){
+		List<Text> list = new ArrayList<>();
+
+		for (BaseModule module : BaseModule.modulesRight) {
+			if (!module.enabled) {
+				continue;
+			}
+			module.update(minecraft);
+
+			// Change this to check for reduced debug
+			list.addAll(module.getLinesFormatted(false));
+
+			// Change this to check for spaced lines
+			if (false) {
+				list.add(new Text(""));
+			}
+		}
+
+		return list;
+	}
 
 	@Inject(at = @At(value = "HEAD"), method = "render")
 	private void betterf3_render(CallbackInfo ci) {
@@ -29,8 +77,8 @@ public class InGameHudMixin {
 	private void betterf3_beforeRenderDebug(CallbackInfo ci) {
 		originalDebugHudValue = minecraft.options.debugHud;
 		minecraft.options.debugHud = false;
+		betterf3_renderAnimation();
 		if(Utils.showDebug){
-			betterf3_renderAnimation();
 			betterf3_renderLeftText();
 			betterf3_renderRightText();
 		}
@@ -42,11 +90,11 @@ public class InGameHudMixin {
 	}
 
 	private void betterf3_renderLeftText(){
-		List<String> list = Arrays.asList("Test string", "test string 2");
+		List<Text> list = getNewLeftText();
 		for(int i = 0; i < list.size(); i++){
-			if(!Strings.isNullOrEmpty(list.get(i))){
+			if(!Strings.isNullOrEmpty(list.get(i).toString())){
 				int height = 9;
-				int width = minecraft.textRenderer.getWidth(list.get(i));
+				int width = minecraft.textRenderer.getWidth(list.get(i).toString());
 				int y = 2 + height * i;
 				int xPosLeft = 2;
 
@@ -55,16 +103,16 @@ public class InGameHudMixin {
 					xPosLeft -= Utils.xPos;
 				}
 
-				minecraft.textRenderer.drawWithShadow(list.get(i), xPosLeft, y, 0xFFFFFF);
+				((ITextRenderer)minecraft.textRenderer).drawMultiColorString(list.get(i), xPosLeft, y, true);
 			}
 		}
 	}
 	private void betterf3_renderRightText(){
-		List<String> list = Arrays.asList("Test string right", "test string 2");
+		List<Text> list = getNewRightText();
 		for(int i = 0; i < list.size(); i++){
-			if(!Strings.isNullOrEmpty(list.get(i))){
+			if(!Strings.isNullOrEmpty(list.get(i).toString())){
 				int height = 9;
-				int width = minecraft.textRenderer.getWidth(list.get(i));
+				int width = minecraft.textRenderer.getWidth(list.get(i).toString());
 				class_564 scaledResolution = new class_564(this.minecraft.options, this.minecraft.displayWidth, this.minecraft.displayHeight);
 				int windowWidth = scaledResolution.method_1857() - 2 - width;
 				//Replace with generaloptions.enableanimations
@@ -73,7 +121,7 @@ public class InGameHudMixin {
 				}
 				int y = 2 + height * i;
 
-				minecraft.textRenderer.drawWithShadow(list.get(i), windowWidth, y, 0xFFFFFF);
+				((ITextRenderer)minecraft.textRenderer).drawMultiColorString(list.get(i), windowWidth, y, true);
 			}
 		}
 	}
@@ -81,7 +129,6 @@ public class InGameHudMixin {
 		long time = System.currentTimeMillis();
 
 		if(time - Utils.lastAnimationUpdate >= 10 && (Utils.xPos != 0 || Utils.closingAnimation)){
-			System.out.println(time);
 			int i = ((Utils.START_X_POS/2 + Utils.xPos) / 10) -9;
 
 			if(Utils.xPos != 0 && !Utils.closingAnimation){
@@ -98,11 +145,9 @@ public class InGameHudMixin {
 				Utils.xPos += i;
 				// Change 1 to animationspeed when config gets added
 				Utils.xPos *= 1;
-			}
 
-			if(Utils.xPos >= 300){
-				Utils.closingAnimation = false;
-				if(!originalDebugHudValue){
+				if(Utils.xPos >= 300){
+					Utils.closingAnimation = false;
 					Utils.showDebug = false;
 				}
 			}

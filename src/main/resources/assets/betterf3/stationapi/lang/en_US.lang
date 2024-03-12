@@ -1,15 +1,26 @@
-achievement.boned=You've been boned!
-achievement.boned.desc=Pick up a bone.
-achievement.apple=AppleStuff
-achievement.apple.desc=Pick up an apple.
+format-betterf3-default_format=%s: %s
+format-betterf3-default_no_colon=%s %s
+format-betterf3-total=%s %s/%s: %s/%s
+format-betterf3-coords=%s: %s  %s  %s
+format-betterf3-server_tick=%s at %.0f ms ticks
+format-betterf3-no_format=%s
+format-betterf3-fps=%s fps / %s fps %s
+format-betterf3-chunklight=Total: %s  Sky: %s  Block: %s
+format-betterf3-chunklight_server=Sky: %s  Block: %s
+format-betterf3-rotation=Yaw: %s  Pitch: %s
 
-achievement.page.examplemod=Example
+text-betterf3-module-minecraft=Minecraft
+text-betterf3-module-coords=Coordinates
 
-item.coolitem.name=Cool Item
+text-betterf3-line-minecraft=Minecraft
+text-betterf3-line-player_coords=
 
-tile.test.name=Example Block
-tile.test2.name=Example Block With Model
-
-key.test=Give Boned Achievement
-key.test2=Give Apple Achievement
-key.hurtme=Hurt Self
+text-betterf3-line-java_version=Java Version
+text-betterf3-line-memory_usage=Memory Usage
+text-betterf3-line-allocated_memory=Allocated Memory
+text-betterf3-line-off_heap=Off-Heap
+text-betterf3-line-cpu=CPU
+text-betterf3-line-display=Display
+text-betterf3-line-gpu=GPU
+text-betterf3-line-opengl_version=OpenGL Version
+text-betterf3-line-gpu_driver=GPU Driver
