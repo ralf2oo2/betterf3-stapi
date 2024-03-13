@@ -57,6 +57,7 @@ public class Text {
     }
 
     public Text append(TextSection... textSections){
+        if(textSections == null) return this;
         return new Text(
                 Stream.concat(Arrays.stream(this.textSections), Arrays.stream(textSections)).toArray(TextSection[]::new)
         );

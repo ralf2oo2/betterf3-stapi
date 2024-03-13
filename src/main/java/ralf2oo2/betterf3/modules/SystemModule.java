@@ -4,6 +4,8 @@ import com.llamalad7.mixinextras.lib.apache.commons.ArrayUtils;
 import net.minecraft.client.Minecraft;
 import org.lwjgl.opengl.GL11;
 import ralf2oo2.betterf3.utils.DebugLine;
+import ralf2oo2.betterf3.utils.Text;
+import ralf2oo2.betterf3.utils.TextSection;
 import ralf2oo2.betterf3.utils.Utils;
 
 import javax.annotation.processing.Processor;
@@ -53,7 +55,7 @@ public class SystemModule extends BaseModule{
 
 
         lines.get(0).setValue(javaVersion);
-        lines.get(1).setValue(Utils.getPercentColor((int) (usedMemory * 100 / maxMemory)) + memoryUsage);
+        lines.get(1).setValue(new Text( new TextSection(memoryUsage, Utils.getPercentColor((int) (usedMemory * 100 / maxMemory)))));
         lines.get(2).setValue(allocatedMemory);
         lines.get(3).setValue(cpuInfo);
         lines.get(4).setValue(displayInfo);
