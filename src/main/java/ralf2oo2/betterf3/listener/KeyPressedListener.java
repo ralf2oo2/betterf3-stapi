@@ -4,6 +4,7 @@ import net.mine_diver.unsafeevents.listener.EventListener;
 import net.minecraft.client.Minecraft;
 import net.modificationstation.stationapi.api.client.event.keyboard.KeyStateChangedEvent;
 import org.lwjgl.input.Keyboard;
+import ralf2oo2.betterf3.config.gui.ModConfigScreen;
 import ralf2oo2.betterf3.utils.Utils;
 
 public class KeyPressedListener {
@@ -12,6 +13,9 @@ public class KeyPressedListener {
     public void keyPressed(KeyStateChangedEvent event) {
         Minecraft minecraft = Utils.getMc();
         System.out.println("test");
+        if(event.environment == KeyStateChangedEvent.Environment.IN_GAME && Keyboard.getEventKey() == Keyboard.KEY_M){
+            minecraft.setScreen(new ModConfigScreen());
+        }
         if(Keyboard.getEventKey() == Keyboard.KEY_F3 && prevDebugHudState != minecraft.options.debugHud){
             prevDebugHudState = minecraft.options.debugHud;
             if(minecraft.options.debugHud){

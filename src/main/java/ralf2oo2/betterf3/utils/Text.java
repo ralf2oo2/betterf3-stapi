@@ -37,6 +37,7 @@ public class Text {
     }
 
     public int getSectionCount(){
+        if(textSections == null) return 0;
         return textSections.length;
     }
 

@@ -123,7 +123,11 @@ public class InGameHudMixin {
 				}
 				int y = 2 + height * i;
 
-				((ITextRenderer)minecraft.textRenderer).drawMultiColorString(list.get(i), windowWidth, y, true);
+				if(Betterf3Config.generalConfig.shadowText){
+					((ITextRenderer)minecraft.textRenderer).drawMultiColorString(list.get(i), windowWidth, y, true);
+				} else {
+					((ITextRenderer)minecraft.textRenderer).drawMultiColorString(list.get(i), windowWidth, y, false);
+				}
 			}
 		}
 	}
