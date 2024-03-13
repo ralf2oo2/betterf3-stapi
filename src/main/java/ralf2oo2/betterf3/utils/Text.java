@@ -14,7 +14,10 @@ public class Text {
     }
 
     public Text(String... strings){
-        if(strings == null) return;
+        if(strings == null){
+            textSections = new TextSection[]{new TextSection("", 0xFFFFFF)};
+            return;
+        }
         TextSection[] sections = new TextSection[strings.length];
         for(int i = 0; i < strings.length; i++){
             sections[i] = new TextSection(strings[i], 0xFFFFFF);
@@ -23,6 +26,7 @@ public class Text {
 
     @Override
     public String toString() {
+        if(textSections == null) return "";
         String string = "";
         for(int i = 0; i < textSections.length; i++){
             if(!Strings.isNullOrEmpty(textSections[i].text)){

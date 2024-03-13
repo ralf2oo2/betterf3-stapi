@@ -25,6 +25,9 @@
       "ralf2oo2.betterf3.Betterf3"
     ],
     "stationapi:event_bus_server": [
+    ],
+    "gcapi": [
+      "ralf2oo2.betterf3.config.Betterf3Config"
     ]
   },
   "mixins": [

@@ -10,6 +10,8 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import ralf2oo2.betterf3.Betterf3;
+import ralf2oo2.betterf3.config.Betterf3Config;
 import ralf2oo2.betterf3.modules.BaseModule;
 import ralf2oo2.betterf3.utils.ITextRenderer;
 import ralf2oo2.betterf3.utils.Text;
@@ -37,8 +39,7 @@ public class InGameHudMixin {
 			// Change this to check for reduced debug
 			list.addAll(module.getLinesFormatted(false));
 
-			// Change this to check for spaced lines
-			if (false) {
+			if (Betterf3Config.generalConfig.spaceEveryModule) {
 				list.add(new Text(""));
 			}
 		}
@@ -58,8 +59,7 @@ public class InGameHudMixin {
 			// Change this to check for reduced debug
 			list.addAll(module.getLinesFormatted(false));
 
-			// Change this to check for spaced lines
-			if (false) {
+			if (Betterf3Config.generalConfig.spaceEveryModule) {
 				list.add(new Text(""));
 			}
 		}
@@ -98,12 +98,15 @@ public class InGameHudMixin {
 				int y = 2 + height * i;
 				int xPosLeft = 2;
 
-				//Replace with generaloptions.enableanimations
-				if(true){
+				if(Betterf3Config.generalConfig.enableAnimations){
 					xPosLeft -= Utils.xPos;
 				}
 
-				((ITextRenderer)minecraft.textRenderer).drawMultiColorString(list.get(i), xPosLeft, y, true);
+				if(Betterf3Config.generalConfig.shadowText){
+					((ITextRenderer)minecraft.textRenderer).drawMultiColorString(list.get(i), xPosLeft, y, true);
+				} else {
+					((ITextRenderer)minecraft.textRenderer).drawMultiColorString(list.get(i), xPosLeft, y, false);
+				}
 			}
 		}
 	}
@@ -115,8 +118,7 @@ public class InGameHudMixin {
 				int width = minecraft.textRenderer.getWidth(list.get(i).toString());
 				class_564 scaledResolution = new class_564(this.minecraft.options, this.minecraft.displayWidth, this.minecraft.displayHeight);
 				int windowWidth = scaledResolution.method_1857() - 2 - width;
-				//Replace with generaloptions.enableanimations
-				if(true){
+				if(Betterf3Config.generalConfig.enableAnimations){
 					windowWidth += Utils.xPos;
 				}
 				int y = 2 + height * i;
@@ -132,8 +134,7 @@ public class InGameHudMixin {
 			int i = ((Utils.START_X_POS/2 + Utils.xPos) / 10) -9;
 
 			if(Utils.xPos != 0 && !Utils.closingAnimation){
-				// Change 1 to animationspeed when config gets added
-				Utils.xPos /= 1;
+				Utils.xPos /= Betterf3Config.generalConfig.animationSpeed;
 				Utils.xPos -= i;
 			}
 
@@ -143,8 +144,7 @@ public class InGameHudMixin {
 
 			if(Utils.closingAnimation){
 				Utils.xPos += i;
-				// Change 1 to animationspeed when config gets added
-				Utils.xPos *= 1;
+				Utils.xPos *= Betterf3Config.generalConfig.animationSpeed;
 
 				if(Utils.xPos >= 300){
 					Utils.closingAnimation = false;
