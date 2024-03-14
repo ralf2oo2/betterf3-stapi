@@ -3,7 +3,9 @@ package ralf2oo2.betterf3.utils;
 import joptsimple.internal.Strings;
 import net.minecraft.client.resource.language.TranslationStorage;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.stream.Stream;
 
 public class Text {
@@ -68,28 +70,53 @@ public class Text {
         );
     }
 
+//    public static Text format(String format, int formatColor, Text... texts){
+//        String formatString = TranslationStorage.getInstance().get(format);
+//        String formatStrings[] = formatString.split("%s");
+//        if(formatStrings.length <= 1){
+//            return new Text(new TextSection(formatString, formatColor));
+//        }
+//        Text finalText = new Text(new TextSection(formatStrings[0], formatColor));
+//        if(texts[0] != null){
+//            finalText = finalText.append(texts[0].getSections());
+//        }
+//        for(int i = 1; i < formatStrings.length; i++){
+//            if(i > texts.length - 1){
+//                continue;
+//            }
+//            finalText = finalText.append(new TextSection(formatStrings[i], formatColor));
+//            if(texts[i] != null){
+//                finalText = finalText.append(texts[i].getSections());
+//            }
+//        }
+//        return finalText;
+//    }
     public static Text format(String format, int formatColor, Text... texts){
-        String formatString = TranslationStorage.getInstance().get(format);
-        String formatStrings[] = formatString.split("%s");
-        if(formatStrings.length <= 1){
-            return new Text(new TextSection(formatString, formatColor));
-        }
-        Text finalText = new Text(new TextSection(formatStrings[0], formatColor));
-        if(texts[0] != null){
-            finalText = finalText.append(texts[0].getSections());
-        }
-        for(int i = 1; i < formatStrings.length; i++){
-            if(i > texts.length - 1){
+        List<TextSection> sections = new ArrayList<>();
+        int nextTextIndex = 0;
+        String currentFormatPart = "";
+        boolean foundTokenStart = false;
+        for (int i = 0; i < format.length(); i++) {
+            char c = format.charAt(i);
+            if(c == '%'){
+                foundTokenStart = true;
                 continue;
             }
-            finalText = finalText.append(new TextSection(formatStrings[i], formatColor));
-            if(texts[i] != null){
-                finalText = finalText.append(texts[i].getSections());
+            if(c == 's' && foundTokenStart){
+                if(currentFormatPart != ""){
+                    sections.add(new TextSection(currentFormatPart, formatColor));
+                }
+                if(nextTextIndex < texts.length){
+                    sections.addAll(Arrays.asList(texts[nextTextIndex].getSections()));
+                    nextTextIndex++;
+                }
+                currentFormatPart = "";
             }
+            if(foundTokenStart){
+                foundTokenStart = false;
+            }
+            currentFormatPart += c;
         }
-        return finalText;
+        return new Text(sections.toArray(TextSection[]::new));
     }
-//    public static Text format(String format, int formatColor, Text... texts){
-//
-//    }
 }

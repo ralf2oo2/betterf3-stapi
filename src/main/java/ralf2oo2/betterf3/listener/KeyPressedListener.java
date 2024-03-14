@@ -5,6 +5,7 @@ import net.minecraft.client.Minecraft;
 import net.modificationstation.stationapi.api.client.event.keyboard.KeyStateChangedEvent;
 import org.lwjgl.input.Keyboard;
 import ralf2oo2.betterf3.config.gui.ModConfigScreen;
+import ralf2oo2.betterf3.utils.Text;
 import ralf2oo2.betterf3.utils.Utils;
 
 import java.util.Arrays;
@@ -14,6 +15,7 @@ public class KeyPressedListener {
     @EventListener
     public void keyPressed(KeyStateChangedEvent event) {
         Minecraft minecraft = Utils.getMc();
+        Text.format("%s:%s", 0xFFFFFF, new Text("test1"), new Text("test2"));
         if(event.environment == KeyStateChangedEvent.Environment.IN_GAME && Keyboard.getEventKey() == Keyboard.KEY_M){
             minecraft.setScreen(new ModConfigScreen());
         }
