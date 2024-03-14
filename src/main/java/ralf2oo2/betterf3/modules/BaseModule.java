@@ -84,9 +84,9 @@ public abstract class BaseModule {
 
 
             if (!line.isCustom) {
-                linesString.add(line.toText(nameColor, valueColor, 0xFFFFFF));
+                linesString.add(line.toText(nameColor, valueColor, nameColor));
             } else {
-                linesString.add(line.toTextCustom(nameColor, 0xFFFFFF));
+                linesString.add(line.toTextCustom(nameColor, nameColor));
             }
 
         }
@@ -109,7 +109,7 @@ public abstract class BaseModule {
     }
 
     public String toString() {
-        return TranslationStorage.getInstance().get("text-betterf3-module_" + id);
+        return TranslationStorage.getInstance().get("text-betterf3-module-" + id);
     }
 
 

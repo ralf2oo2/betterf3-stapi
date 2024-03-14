@@ -83,7 +83,7 @@ public class InGameHudMixin {
 			betterf3_renderRightText();
 		}
 	}
-	@Debug(export = true)
+
 	@Inject(at = @At(value = "TAIL"), method = "render")
 	private void betterf3_afterRender(CallbackInfo ci) {
 		minecraft.options.debugHud = originalDebugHudValue;

@@ -56,6 +56,16 @@ public class Utils {
         }
     }
 
+    public static int getFpsColor(int currentFps){
+        if(currentFps >= 60){
+            return 0;
+        } else if (currentFps >= 20){
+            return 1;
+        } else {
+            return 2;
+        }
+    }
+
     public static Text formattedFromString(final String string, final int nameColor, final int valueColor) {
         if(string == null){
             return new Text("");

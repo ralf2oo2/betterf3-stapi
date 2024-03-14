@@ -80,7 +80,6 @@ public class Text {
         }
         for(int i = 1; i < formatStrings.length; i++){
             if(i > texts.length - 1){
-                finalText = finalText.append(new TextSection("%s", formatColor));
                 continue;
             }
             finalText = finalText.append(new TextSection(formatStrings[i], formatColor));
@@ -90,4 +89,7 @@ public class Text {
         }
         return finalText;
     }
+//    public static Text format(String format, int formatColor, Text... texts){
+//
+//    }
 }

@@ -8,6 +8,9 @@ public class GeneralConfig {
     @ConfigName("Disable Mod")
     public Boolean disableMod = false;
 
+    @ConfigName("Disable Lagometer")
+    public Boolean disableLagometer = true;
+
     @ConfigName("Space Every Module")
     public Boolean spaceEveryModule = false;
 

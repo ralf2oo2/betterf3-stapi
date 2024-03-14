@@ -9,7 +9,9 @@
   ],
   "client": [
     "InGameHudMixin",
-    "TextRendererMixin"
+    "TextRendererMixin",
+    "EntryListWidgetAccessor",
+    "MinecraftMixin"
   ],
   "injectors": {
     "defaultRequire": 1

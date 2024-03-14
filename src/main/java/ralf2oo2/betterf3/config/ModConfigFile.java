@@ -5,6 +5,7 @@ import com.electronwill.nightconfig.core.file.FileConfig;
 import ralf2oo2.betterf3.modules.BaseModule;
 import ralf2oo2.betterf3.modules.CoordsModule;
 import ralf2oo2.betterf3.modules.EmptyModule;
+import ralf2oo2.betterf3.modules.FpsModule;
 import ralf2oo2.betterf3.utils.DebugLine;
 
 import java.io.File;
@@ -138,16 +139,14 @@ public class ModConfigFile {
             coordsModule.colorZ = moduleConfig.getOrElse("color_z", coordsModule.defaultColorZ);
         }
 
-        //TODO: Implement this
+        if (baseModule instanceof FpsModule) {
 
-//        if (baseModule instanceof FpsModule) {
-//
-//            FpsModule fpsModule = (FpsModule) baseModule;
-//
-//            fpsModule.colorHigh = TextColor.fromRgb(moduleConfig.getOrElse("color_high", fpsModule.defaultColorHigh.getRgb()));
-//            fpsModule.colorMed = TextColor.fromRgb(moduleConfig.getOrElse("color_med", fpsModule.defaultColorMed.getRgb()));
-//            fpsModule.colorLow = TextColor.fromRgb(moduleConfig.getOrElse("color_low", fpsModule.defaultColorLow.getRgb()));
-//        }
+            FpsModule fpsModule = (FpsModule) baseModule;
+
+            fpsModule.colorHigh = moduleConfig.getOrElse("color_high", fpsModule.defaultColorHigh);
+            fpsModule.colorMed = moduleConfig.getOrElse("color_med", fpsModule.defaultColorMed);
+            fpsModule.colorLow = moduleConfig.getOrElse("color_low", fpsModule.defaultColorLow);
+        }
 
         baseModule.enabled = moduleConfig.getOrElse("enabled", true);
         return baseModule;
@@ -186,19 +185,18 @@ public class ModConfigFile {
             }
         }
 
-        //TODO: fix this
-//        if (module instanceof FpsModule) {
-//            FpsModule fpsModule = (FpsModule) module;
-//            if (fpsModule.colorHigh != null) {
-//                moduleConfig.set("color_high", fpsModule.colorHigh.getRgb());
-//            }
-//            if (fpsModule.colorMed != null) {
-//                moduleConfig.set("color_med", fpsModule.colorMed.getRgb());
-//            }
-//            if (fpsModule.colorLow != null) {
-//                moduleConfig.set("color_low", fpsModule.colorLow.getRgb());
-//            }
-//        }
+        if (module instanceof FpsModule) {
+            FpsModule fpsModule = (FpsModule) module;
+            if (fpsModule.colorHigh != 0) {
+                moduleConfig.set("color_high", fpsModule.colorHigh);
+            }
+            if (fpsModule.colorMed != 0) {
+                moduleConfig.set("color_med", fpsModule.colorMed);
+            }
+            if (fpsModule.colorLow != 0) {
+                moduleConfig.set("color_low", fpsModule.colorLow);
+            }
+        }
 
         moduleConfig.set("enabled", module.enabled);
         moduleConfig.set("lines", lines);

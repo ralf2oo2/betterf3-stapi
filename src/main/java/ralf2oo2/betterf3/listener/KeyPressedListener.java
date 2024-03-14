@@ -7,12 +7,13 @@ import org.lwjgl.input.Keyboard;
 import ralf2oo2.betterf3.config.gui.ModConfigScreen;
 import ralf2oo2.betterf3.utils.Utils;
 
+import java.util.Arrays;
+
 public class KeyPressedListener {
     boolean prevDebugHudState = false;
     @EventListener
     public void keyPressed(KeyStateChangedEvent event) {
         Minecraft minecraft = Utils.getMc();
-        System.out.println("test");
         if(event.environment == KeyStateChangedEvent.Environment.IN_GAME && Keyboard.getEventKey() == Keyboard.KEY_M){
             minecraft.setScreen(new ModConfigScreen());
         }
