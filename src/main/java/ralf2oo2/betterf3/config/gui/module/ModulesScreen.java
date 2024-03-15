@@ -34,7 +34,7 @@ public class ModulesScreen extends Screen implements IOnCloseHandler {
         }
         // Edit button
         if(button.id == 1){
-            minecraft.setScreen(new EditModuleScreen(this));
+            minecraft.setScreen(new EditModuleScreen(this, this.modulesListWidget.moduleEntries.get(modulesListWidget.selectedModuleIndex).module));
         }
         // Add button
         if(button.id == 2){

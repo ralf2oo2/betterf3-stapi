@@ -147,7 +147,7 @@ public class ModuleListWidget extends EntryListWidget {
             DrawContext drawContext = new DrawContext();
             //TODO: figure out check for if statement
             if(index == selectedModuleIndex){
-                minecraft.textureManager.bindTexture(minecraft.textureManager.getTextureId("/assets/betterf3/gui/arrows.png"));
+                minecraft.textureManager.bindTexture(minecraft.textureManager.getTextureId("/assets/betterf3/gui/gui.png"));
                 GL11.glColor3f(1f, 1f, 1f);
                 int v = mouseX - x;
                 int w = mouseY - y;
