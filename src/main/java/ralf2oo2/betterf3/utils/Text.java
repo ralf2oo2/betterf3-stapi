@@ -93,11 +93,13 @@ public class Text {
 //    }
     public static Text format(String format, int formatColor, Text... texts){
         List<TextSection> sections = new ArrayList<>();
+        String formatString = TranslationStorage.getInstance().get(format);
+
         int nextTextIndex = 0;
         String currentFormatPart = "";
         boolean foundTokenStart = false;
-        for (int i = 0; i < format.length(); i++) {
-            char c = format.charAt(i);
+        for (int i = 0; i < formatString.length(); i++) {
+            char c = formatString.charAt(i);
             if(c == '%'){
                 foundTokenStart = true;
                 continue;
@@ -106,16 +108,21 @@ public class Text {
                 if(currentFormatPart != ""){
                     sections.add(new TextSection(currentFormatPart, formatColor));
                 }
-                if(nextTextIndex < texts.length){
-                    sections.addAll(Arrays.asList(texts[nextTextIndex].getSections()));
+                if(texts != null && nextTextIndex < texts.length){
+                    if(texts[nextTextIndex].getSections() != null){
+                        sections.addAll(Arrays.asList(texts[nextTextIndex].getSections()));
+                    }
                     nextTextIndex++;
                 }
                 currentFormatPart = "";
-            }
-            if(foundTokenStart){
+                continue;
+            } else if(foundTokenStart){
                 foundTokenStart = false;
             }
             currentFormatPart += c;
+        }
+        if(currentFormatPart != ""){
+            sections.add(new TextSection(currentFormatPart, formatColor));
         }
         return new Text(sections.toArray(TextSection[]::new));
     }
