@@ -11,7 +11,8 @@
     "InGameHudMixin",
     "TextRendererMixin",
     "EntryListWidgetAccessor",
-    "MinecraftMixin"
+    "MinecraftMixin",
+    "DrawContextAccessor"
   ],
   "injectors": {
     "defaultRequire": 1

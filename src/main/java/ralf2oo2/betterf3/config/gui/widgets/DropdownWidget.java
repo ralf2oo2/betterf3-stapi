@@ -1,4 +1,4 @@
-package ralf2oo2.betterf3.config.gui.module;
+package ralf2oo2.betterf3.config.gui.widgets;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.font.TextRenderer;

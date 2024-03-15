@@ -1,4 +1,4 @@
-package ralf2oo2.betterf3.config.gui.module;
+package ralf2oo2.betterf3.config.gui.widgets;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.DrawContext;
@@ -6,7 +6,7 @@ import net.minecraft.client.gui.widget.EntryListWidget;
 import net.minecraft.client.render.Tessellator;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
-import ralf2oo2.betterf3.mixin.EntryListWidgetAccessor;
+import ralf2oo2.betterf3.config.gui.module.ModulesScreen;
 import ralf2oo2.betterf3.modules.BaseModule;
 import ralf2oo2.betterf3.modules.CoordsModule;
 import ralf2oo2.betterf3.modules.FpsModule;
@@ -20,12 +20,12 @@ import java.util.List;
 public class ModuleListWidget extends EntryListWidget {
     ModulesScreen screen;
     Minecraft minecraft;
-    int selectedModuleIndex = -1;
+    public int selectedModuleIndex = -1;
     int mouseX = 0;
     int mouseY = 0;
     boolean hasClickedUp = false;
     boolean hasClickedDown = false;
-    List<ModuleEntry> moduleEntries = new ArrayList();
+    public List<ModuleEntry> moduleEntries = new ArrayList();
 
     public ModuleListWidget(ModulesScreen screen, Minecraft minecraft, int width, int height, int top, int bottom, int itemHeight) {
         super(minecraft, width, height, top, bottom, itemHeight);

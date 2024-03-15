@@ -3,10 +3,8 @@ package ralf2oo2.betterf3.config.gui.module;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.resource.language.TranslationStorage;
-import ralf2oo2.betterf3.modules.BaseModule;
+import ralf2oo2.betterf3.config.gui.widgets.DropdownWidget;
 import ralf2oo2.betterf3.utils.IOnCloseHandler;
-
-import java.util.Arrays;
 
 public class AddModuleScreen extends Screen {
     private final ModulesScreen parent;
@@ -23,7 +21,7 @@ public class AddModuleScreen extends Screen {
     }
 
     private void registerButtons(){
-        ButtonWidget saveButton = new ButtonWidget(0, this.width / 2 - 100, this.height - 100, 200, 20, TranslationStorage.getInstance().get("config-betterf3-add_button.module_name"));
+        ButtonWidget saveButton = new ButtonWidget(0, this.width / 2 - 100, this.height - 100, 200, 20, TranslationStorage.getInstance().get("config-betterf3-modules-add_button"));
         this.buttons.add(saveButton);
     }
 
