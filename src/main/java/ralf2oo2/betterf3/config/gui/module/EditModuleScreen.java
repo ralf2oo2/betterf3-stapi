@@ -11,6 +11,7 @@ import ralf2oo2.betterf3.config.gui.widgets.ConfigLineWidget;
 import ralf2oo2.betterf3.modules.BaseModule;
 import ralf2oo2.betterf3.modules.CoordsModule;
 import ralf2oo2.betterf3.modules.FpsModule;
+import ralf2oo2.betterf3.utils.DebugLine;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,6 +47,9 @@ public class EditModuleScreen extends Screen implements IConfigLineParentHandler
         if(button.id == 1){
             setFocusedId(-1);
             if(getInputErrors() == 0){
+                for(ConfigLineWidget line : configLines){
+                    line.saveChanges();
+                }
                 minecraft.setScreen(parent);
             }
         }
@@ -63,7 +67,7 @@ public class EditModuleScreen extends Screen implements IConfigLineParentHandler
         if(module instanceof CoordsModule){
             CoordsModule coordsModule = (CoordsModule) module;
 
-            if (coordsModule.colorX != 0 && coordsModule.defaultColorX != 0) {
+            if (coordsModule.colorX != null && coordsModule.defaultColorX != null) {
                 ConfigLineWidget colorX = new ConfigLineWidget(1, this, minecraft, 1, TranslationStorage.getInstance().get("config-betterf3-color-x"),
                         newValue -> {
                             coordsModule.colorX = (int)newValue;
@@ -72,7 +76,7 @@ public class EditModuleScreen extends Screen implements IConfigLineParentHandler
                 colorX.setValue(coordsModule.colorX);
                 configLines.add(colorX);
             }
-            if (coordsModule.colorY != 0 && coordsModule.defaultColorY != 0) {
+            if (coordsModule.colorY != null && coordsModule.defaultColorY != null) {
                 ConfigLineWidget colorY = new ConfigLineWidget(2, this, minecraft, 1, TranslationStorage.getInstance().get("config-betterf3-color-y"),
                         newValue -> {
                             coordsModule.colorY = (int)newValue;
@@ -81,7 +85,7 @@ public class EditModuleScreen extends Screen implements IConfigLineParentHandler
                 colorY.setValue(coordsModule.colorY);
                 configLines.add(colorY);
             }
-            if (coordsModule.colorZ != 0 && coordsModule.defaultColorZ != 0) {
+            if (coordsModule.colorZ != null && coordsModule.defaultColorZ != null) {
                 ConfigLineWidget colorZ = new ConfigLineWidget(3, this, minecraft, 1, TranslationStorage.getInstance().get("config-betterf3-color-z"),
                         newValue -> {
                             coordsModule.colorZ = (int)newValue;
@@ -92,7 +96,7 @@ public class EditModuleScreen extends Screen implements IConfigLineParentHandler
             }
         } else if(module instanceof FpsModule) {
             FpsModule fpsModule = (FpsModule)module;
-            if (fpsModule.colorHigh != 0 && fpsModule.defaultColorHigh != 0) {
+            if (fpsModule.colorHigh != null && fpsModule.defaultColorHigh != null) {
                 ConfigLineWidget colorHigh = new ConfigLineWidget(1, this, minecraft, 1, TranslationStorage.getInstance().get("config-betterf3-color-fps-high"),
                         newValue -> {
                             fpsModule.colorHigh = (int)newValue;
@@ -101,7 +105,7 @@ public class EditModuleScreen extends Screen implements IConfigLineParentHandler
                 colorHigh.setValue(fpsModule.colorHigh);
                 configLines.add(colorHigh);
             }
-            if (fpsModule.colorMed != 0 && fpsModule.defaultColorMed != 0) {
+            if (fpsModule.colorMed != null && fpsModule.defaultColorMed != null) {
                 ConfigLineWidget colorMed = new ConfigLineWidget(2, this, minecraft, 1, TranslationStorage.getInstance().get("config-betterf3-color-fps-medium"),
                         newValue -> {
                             fpsModule.colorMed = (int)newValue;
@@ -110,7 +114,7 @@ public class EditModuleScreen extends Screen implements IConfigLineParentHandler
                 colorMed.setValue(fpsModule.colorMed);
                 configLines.add(colorMed);
             }
-            if (fpsModule.colorLow != 0 && fpsModule.defaultColorLow != 0) {
+            if (fpsModule.colorLow != null && fpsModule.defaultColorLow != null) {
                 ConfigLineWidget colorLow = new ConfigLineWidget(3, this, minecraft, 1, TranslationStorage.getInstance().get("config-betterf3-color-fps-low"),
                         newValue -> {
                             fpsModule.colorLow = (int)newValue;
@@ -121,7 +125,7 @@ public class EditModuleScreen extends Screen implements IConfigLineParentHandler
             }
         }
 
-        if (module.nameColor != -1 && module.defaultNameColor != -1) {
+        if (module.nameColor != null && module.defaultNameColor != null) {
             ConfigLineWidget nameColor = new ConfigLineWidget(4, this, minecraft, 1, TranslationStorage.getInstance().get("config-betterf3-color-name"),
                     newValue -> {
                         module.nameColor = (int)newValue;
@@ -131,7 +135,7 @@ public class EditModuleScreen extends Screen implements IConfigLineParentHandler
             configLines.add(nameColor);
         }
 
-        if (module.valueColor != -1 && module.defaultValueColor != -1) {
+        if (module.valueColor != null && module.defaultValueColor != null) {
             ConfigLineWidget valueColor = new ConfigLineWidget(5, this, minecraft, 1, TranslationStorage.getInstance().get("config-betterf3-color-value"),
                     newValue -> {
                         module.valueColor = (int)newValue;
@@ -139,6 +143,30 @@ public class EditModuleScreen extends Screen implements IConfigLineParentHandler
             valueColor.setDefaultValue(module.defaultValueColor);
             valueColor.setValue(module.valueColor);
             configLines.add(valueColor);
+        }
+
+        if(module.getLines().size() > 1){
+            int nextId = 6;
+            for (DebugLine line : module.getLines()){
+                if(line.getId().equals("")){
+                    continue;
+                }
+                String name = TranslationStorage.getInstance().get("text-betterf3-line-" + line.getId());
+
+                if(name.equals("")){
+                    name = line.getId().replace("_", "");
+                }
+
+                ConfigLineWidget enabled = new ConfigLineWidget(nextId, this, minecraft, 0, name,
+                        newValue -> {
+                            line.enabled = (boolean)newValue;
+                        });
+                enabled.setDefaultValue(true);
+                enabled.setValue(line.enabled);
+
+                configLines.add(enabled);
+                nextId++;
+            }
         }
     }
 
@@ -191,6 +219,7 @@ public class EditModuleScreen extends Screen implements IConfigLineParentHandler
         configLines = new ArrayList<>();
         this.registerConfigLines();
         this.registerButtons();
+        this.scrollAmount = 0;
     }
 
     public void renderDarkBackground(){

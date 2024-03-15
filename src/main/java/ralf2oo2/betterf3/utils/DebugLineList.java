@@ -14,7 +14,7 @@ public class DebugLineList extends DebugLine{
         this.active = true;
     }
 
-    public List<Text> toTexts(final int nameColor, final int valueColor){
+    public List<Text> toTexts(final Integer nameColor, final Integer valueColor){
         final List<Text> texts = new ArrayList<>();
 
         for(final String v : this.values){

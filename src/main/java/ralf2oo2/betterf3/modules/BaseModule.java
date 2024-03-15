@@ -12,11 +12,11 @@ import java.util.List;
 import java.util.Optional;
 
 public abstract class BaseModule {
-    public int nameColor;
-    public int valueColor;
+    public Integer nameColor;
+    public Integer valueColor;
 
-    public int defaultNameColor;
-    public int defaultValueColor;
+    public Integer defaultNameColor;
+    public Integer defaultValueColor;
 
     public boolean enabled = true;
 

@@ -39,14 +39,17 @@ public class Utils {
         return Minecraft.class.cast(FabricLoader.getInstance().getGameInstance());
     }
 
-    public static Text getStyledText(String string, int color){
+    public static Text getStyledText(String string, Integer color){
         if(string == null){
             string = "";
+        }
+        if(color == null){
+            color = 0xFFFFFF;
         }
         return new Text(new TextSection(string, color));
     }
 
-    public static int getPercentColor(int percent) {
+    public static Integer getPercentColor(int percent) {
         if (percent >= 90) {
             return 0xFF5555;
         } else if (percent >= 60) {
@@ -56,7 +59,7 @@ public class Utils {
         }
     }
 
-    public static int getFpsColor(int currentFps){
+    public static Integer getFpsColor(int currentFps){
         if(currentFps >= 60){
             return 0;
         } else if (currentFps >= 20){

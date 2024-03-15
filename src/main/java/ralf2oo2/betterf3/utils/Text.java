@@ -91,7 +91,7 @@ public class Text {
 //        }
 //        return finalText;
 //    }
-    public static Text format(String format, int formatColor, Text... texts){
+    public static Text format(String format, Integer formatColor, Text... texts){
         List<TextSection> sections = new ArrayList<>();
         String formatString = TranslationStorage.getInstance().get(format);
 

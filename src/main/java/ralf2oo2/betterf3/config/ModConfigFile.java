@@ -121,12 +121,10 @@ public class ModConfigFile {
             }
         }
 
-        //TODO: probably remove if statement
-
-        if (baseModule.defaultNameColor != 0) {
+        if (baseModule.defaultNameColor != null) {
             baseModule.nameColor = moduleConfig.getOrElse("name_color", baseModule.defaultNameColor);
         }
-        if (baseModule.defaultValueColor != 0) {
+        if (baseModule.defaultValueColor != null) {
             baseModule.valueColor = moduleConfig.getOrElse("value_color", baseModule.defaultNameColor);
         }
 
@@ -165,35 +163,35 @@ public class ModConfigFile {
 
         moduleConfig.set("name", module.id);
 
-        if (module.nameColor != 0) {
+        if (module.nameColor != null) {
             moduleConfig.set("name_color", module.nameColor);
         }
-        if (module.valueColor != 0) {
+        if (module.valueColor != null) {
             moduleConfig.set("value_color", module.valueColor);
         }
 
         if (module instanceof CoordsModule) {
             CoordsModule coordsModule = (CoordsModule) module;
-            if (coordsModule.colorX != 0) {
+            if (coordsModule.colorX != null) {
                 moduleConfig.set("color_x", coordsModule.colorX);
             }
-            if (coordsModule.colorY != 0) {
+            if (coordsModule.colorY != null) {
                 moduleConfig.set("color_y", coordsModule.colorY);
             }
-            if (coordsModule.colorZ != 0) {
+            if (coordsModule.colorZ != null) {
                 moduleConfig.set("color_z", coordsModule.colorZ);
             }
         }
 
         if (module instanceof FpsModule) {
             FpsModule fpsModule = (FpsModule) module;
-            if (fpsModule.colorHigh != 0) {
+            if (fpsModule.colorHigh != null) {
                 moduleConfig.set("color_high", fpsModule.colorHigh);
             }
-            if (fpsModule.colorMed != 0) {
+            if (fpsModule.colorMed != null) {
                 moduleConfig.set("color_med", fpsModule.colorMed);
             }
-            if (fpsModule.colorLow != 0) {
+            if (fpsModule.colorLow != null) {
                 moduleConfig.set("color_low", fpsModule.colorLow);
             }
         }

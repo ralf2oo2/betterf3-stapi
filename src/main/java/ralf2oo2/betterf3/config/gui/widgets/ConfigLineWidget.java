@@ -56,9 +56,6 @@ public class ConfigLineWidget {
                 }
                 break;
         }
-        if(!inputError){
-            saveConsumer.accept(value);
-        }
     }
 
     private void refreshInputs(){
@@ -174,6 +171,12 @@ public class ConfigLineWidget {
         processValue();
     }
 
+    public void saveChanges(){
+        if(!inputError){
+            saveConsumer.accept(value);
+        }
+    }
+
     private void renderInput(int y, int mouseX, int mouseY){
         switch(inputType){
             case 0:
@@ -229,7 +232,7 @@ public class ConfigLineWidget {
             ((IConfigLineParentHandler)parent).setFocusedId(this.id);
         }
 
-        ((DrawContextAccessor)drawContext).invokeFill(x- 1, y - 1, x + width + 1, y + height + 1, inputError ? 0xAA0000 : -6250336);
+        ((DrawContextAccessor)drawContext).invokeFill(x- 1, y - 1, x + width + 1, y + height + 1, -6250336);
         ((DrawContextAccessor)drawContext).invokeFill(x, y, x + width, y + height, -16777216);
 
         drawContext.drawTextWithShadow(minecraft.textRenderer, (inputType == 1 ? "#" : "") + textBoxValue + (((IConfigLineParentHandler)parent).getFocusedId() == this.id ? "_" : ""), x + 4, y + (height - 8) / 2, (inputError ? 0xAA0000 : 14737632));

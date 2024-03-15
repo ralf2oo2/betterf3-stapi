@@ -8,13 +8,13 @@ import ralf2oo2.betterf3.utils.Utils;
 import java.util.Arrays;
 
 public class CoordsModule extends BaseModule{
-    public int colorX;
-    public int colorY;
-    public int colorZ;
+    public Integer colorX;
+    public Integer colorY;
+    public Integer colorZ;
 
-    public int defaultColorX = 0xFF5555;
-    public int defaultColorY = 0x55FF55;
-    public int defaultColorZ = 0x55FFFF;
+    public Integer defaultColorX = 0xFF5555;
+    public Integer defaultColorY = 0x55FF55;
+    public Integer defaultColorZ = 0x55FFFF;
 
     public CoordsModule(){
         this.defaultNameColor = 0xFF5555;

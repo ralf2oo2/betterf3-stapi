@@ -138,7 +138,7 @@ public class ModuleListWidget extends EntryListWidget {
                 exampleText = Utils.getStyledText("60 fps ", fpsModule.colorHigh)
                         .append(Utils.getStyledText("40 fps ", fpsModule.colorMed).getSections())
                         .append(Utils.getStyledText("10 fps", fpsModule.colorLow).getSections());
-            } else if (this.module.nameColor != 0 && this.module.valueColor != 0){
+            } else if (this.module.nameColor != null && this.module.valueColor != null){
                 exampleText = Utils.getStyledText("Name: ", this.module.nameColor)
                         .append(Utils.getStyledText("Value", this.module.valueColor).getSections());
             }

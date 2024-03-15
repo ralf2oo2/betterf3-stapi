@@ -10,13 +10,13 @@ import java.util.Arrays;
 import java.util.Collections;
 
 public class FpsModule extends BaseModule{
-    public int colorHigh;
-    public int colorMed;
-    public int colorLow;
+    public Integer colorHigh;
+    public Integer colorMed;
+    public Integer colorLow;
 
-    public int defaultColorHigh = 0x55FF55;
-    public int defaultColorMed = 0xFFFF55;
-    public int defaultColorLow = 0xFF5555;
+    public Integer defaultColorHigh = 0x55FF55;
+    public Integer defaultColorMed = 0xFFFF55;
+    public Integer defaultColorLow = 0xFF5555;
 
     public FpsModule(){
         lines.add(new DebugLine("fps", "format-betterf3-fps", true));

@@ -29,7 +29,7 @@ public class DebugLine {
         this.isCustom = isCustom;
     }
 
-    public Text toText(int nameColor, int valueColor, int formatColor){
+    public Text toText(Integer nameColor, Integer valueColor, Integer formatColor){
         String name = this.getName();
 
         Text nameStyled = Utils.getStyledText(name, nameColor);
@@ -48,7 +48,7 @@ public class DebugLine {
         return Text.format(this.format, formatColor, nameStyled, valueStyled);
     }
 
-    public Text toTextCustom(int nameColor, int formatColor) {
+    public Text toTextCustom(Integer nameColor, Integer formatColor) {
 
         String name = this.getName();
 
