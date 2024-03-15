@@ -18,6 +18,7 @@ public class ConfigLineWidget {
     private final String tooltip;
     private int margin = 50;
     private boolean inputError = false;
+    private boolean inputClicked = false;
     private Object value;
     private Object defaultValue;
     private String textBoxValue = "";
@@ -42,15 +43,29 @@ public class ConfigLineWidget {
             case 0:
                 break;
             case 1:
+                inputError = false;
                 try{
                     value = Integer.parseInt(textBoxValue, 16);
-                } catch (Exception e){}
+                } catch (Exception e){
+                    inputError = true;
+                }
+                break;
+        }
+    }
+
+    private void refreshInputs(){
+        switch(inputType){
+            case 1:
+                textBoxValue = String.format("%02x", (int)value);
+                break;
+            default:
                 break;
         }
     }
 
     private void resetValue(){
         this.value = this.defaultValue;
+        refreshInputs();
 
     }
     public void render(int x, int y, int mouseX, int mouseY, float delta){
@@ -159,7 +174,35 @@ public class ConfigLineWidget {
         }
     }
     private void renderBooleanInput(int y, int mouseX, int mouseY){
+        int width = 100;
+        int height = 20;
 
+        int buttonState = 1;
+
+        int x = parent.width - margin - 50 - 4 - width;
+
+        boolean isInBox = isInLine(x, y - 2, mouseX, mouseY, width);
+        if(isInBox){
+            buttonState = 2;
+        }
+
+        if(Mouse.isButtonDown(0) && isInBox){
+            if(!inputClicked){
+                inputClicked = true;
+                ((IConfigLineParentHandler)parent).setFocusedId(this.id);
+                this.value = !(boolean)value;
+            }
+        } else {
+            inputClicked = false;
+        }
+
+        DrawContext drawContext = new DrawContext();
+        GL11.glBindTexture(3553, minecraft.textureManager.getTextureId("/gui/gui.png"));
+        GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+        drawContext.drawTexture(x, y, 0, 46 + buttonState * 20, width / 2, height);
+        drawContext.drawTexture(x + width / 2, y, 200 - width / 2, 46 + buttonState * 20, width / 2, height);
+
+        drawContext.drawCenteredTextWithShadow(minecraft.textRenderer, (boolean)value ? "Yes" : "No", x + width / 2, y + 6, (boolean)value ? 0x00FF00 : 0xFF0000);
     }
     private void renderTextInput(int y, int mouseX, int mouseY){
         DrawContext drawContext = new DrawContext();
@@ -174,7 +217,7 @@ public class ConfigLineWidget {
             ((IConfigLineParentHandler)parent).setFocusedId(this.id);
         }
 
-        ((DrawContextAccessor)drawContext).invokeFill(x- 1, y - 1, x + width + 1, y + height + 1, -6250336);
+        ((DrawContextAccessor)drawContext).invokeFill(x- 1, y - 1, x + width + 1, y + height + 1, inputError ? 0xAA0000 : -6250336);
         ((DrawContextAccessor)drawContext).invokeFill(x, y, x + width, y + height, -16777216);
 
         drawContext.drawTextWithShadow(minecraft.textRenderer, (inputType == 1 ? "#" : "") + textBoxValue + (((IConfigLineParentHandler)parent).getFocusedId() == this.id ? "_" : ""), x + 4, y + (height - 8) / 2, (value != null && inputType == 1 ? (int)value : 14737632));
@@ -186,11 +229,7 @@ public class ConfigLineWidget {
 
     public void setValue(Object value){
         this.value = value;
-        switch(inputType){
-            case 1:
-                textBoxValue = String.format("%02x", (int)value);
-                break;
-        }
+        refreshInputs();
     }
 
     public void setDefaultValue(Object defaultValue) {

@@ -32,7 +32,9 @@ public class EditModuleScreen extends Screen implements IConfigLineParentHandler
         ConfigLineWidget testConfigLine = new ConfigLineWidget(0, this, minecraft, 1,"Title", "This is a tooltip");
         testConfigLine.setDefaultValue(0xFF0000);
         testConfigLine.setValue(0xFFFF00);
-        ConfigLineWidget testConfigLine2 = new ConfigLineWidget(1, this, minecraft, 1,"Title", "This is a tooltip");
+        ConfigLineWidget testConfigLine2 = new ConfigLineWidget(1, this, minecraft, 0,"Title", "This is a tooltip");
+        testConfigLine2.setDefaultValue(true);
+        testConfigLine2.setValue(false);
         ConfigLineWidget testConfigLine3 = new ConfigLineWidget(2, this, minecraft, 1,"Title", "This is a tooltip");
         ConfigLineWidget testConfigLine4 = new ConfigLineWidget(3, this, minecraft, 1,"Title", "This is a tooltip");
         ConfigLineWidget testConfigLine5 = new ConfigLineWidget(4, this, minecraft, 1,"Title", "This is a tooltip");
