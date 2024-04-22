@@ -2,28 +2,25 @@ package ralf2oo2.betterf3.mixin;
 import joptsimple.internal.Strings;
 import net.minecraft.class_564;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.hud.InGameHud;
-import net.minecraft.client.resource.language.TranslationStorage;
 import org.spongepowered.asm.mixin.Debug;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import ralf2oo2.betterf3.Betterf3;
-import ralf2oo2.betterf3.config.Betterf3Config;
+import ralf2oo2.betterf3.config.GeneralOptions;
 import ralf2oo2.betterf3.modules.BaseModule;
 import ralf2oo2.betterf3.utils.ITextRenderer;
 import ralf2oo2.betterf3.utils.Text;
-import ralf2oo2.betterf3.utils.TextSection;
 import ralf2oo2.betterf3.utils.Utils;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @Mixin(InGameHud.class)
-public class InGameHudMixin {
+public class InGameHudMixin extends DrawContext {
 	private boolean originalDebugHudValue;
 	@Shadow private Minecraft minecraft;
 
@@ -39,7 +36,7 @@ public class InGameHudMixin {
 			// Change this to check for reduced debug
 			list.addAll(module.getLinesFormatted(false));
 
-			if (Betterf3Config.generalConfig.spaceEveryModule) {
+			if (GeneralOptions.spaceEveryModule) {
 				list.add(new Text(""));
 			}
 		}
@@ -59,7 +56,7 @@ public class InGameHudMixin {
 			// Change this to check for reduced debug
 			list.addAll(module.getLinesFormatted(false));
 
-			if (Betterf3Config.generalConfig.spaceEveryModule) {
+			if (GeneralOptions.spaceEveryModule) {
 				list.add(new Text(""));
 			}
 		}
@@ -98,11 +95,14 @@ public class InGameHudMixin {
 				int y = 2 + height * i;
 				int xPosLeft = 2;
 
-				if(Betterf3Config.generalConfig.enableAnimations){
+				if(GeneralOptions.enableAnimations){
 					xPosLeft -= Utils.xPos;
 				}
+				if(GeneralOptions.showBackground){
+					super.fill(0, y - 1, (width + xPosLeft) + 2, y + height - 1, GeneralOptions.backgroundColor);
+				}
 
-				if(Betterf3Config.generalConfig.shadowText){
+				if(GeneralOptions.shadowText){
 					((ITextRenderer)minecraft.textRenderer).drawMultiColorString(list.get(i), xPosLeft, y, true);
 				} else {
 					((ITextRenderer)minecraft.textRenderer).drawMultiColorString(list.get(i), xPosLeft, y, false);
@@ -118,12 +118,16 @@ public class InGameHudMixin {
 				int width = minecraft.textRenderer.getWidth(list.get(i).toString());
 				class_564 scaledResolution = new class_564(this.minecraft.options, this.minecraft.displayWidth, this.minecraft.displayHeight);
 				int windowWidth = scaledResolution.method_1857() - 2 - width;
-				if(Betterf3Config.generalConfig.enableAnimations){
+				if(GeneralOptions.enableAnimations){
 					windowWidth += Utils.xPos;
 				}
 				int y = 2 + height * i;
 
-				if(Betterf3Config.generalConfig.shadowText){
+				if(GeneralOptions.showBackground){
+					super.fill(windowWidth - 3, y - 1, scaledResolution.method_1857(), y + height - 1, GeneralOptions.backgroundColor);
+				}
+
+				if(GeneralOptions.shadowText){
 					((ITextRenderer)minecraft.textRenderer).drawMultiColorString(list.get(i), windowWidth, y, true);
 				} else {
 					((ITextRenderer)minecraft.textRenderer).drawMultiColorString(list.get(i), windowWidth, y, false);
@@ -138,7 +142,7 @@ public class InGameHudMixin {
 			int i = ((Utils.START_X_POS/2 + Utils.xPos) / 10) -9;
 
 			if(Utils.xPos != 0 && !Utils.closingAnimation){
-				Utils.xPos /= Betterf3Config.generalConfig.animationSpeed;
+				Utils.xPos /= GeneralOptions.animationSpeed;
 				Utils.xPos -= i;
 			}
 
@@ -148,7 +152,7 @@ public class InGameHudMixin {
 
 			if(Utils.closingAnimation){
 				Utils.xPos += i;
-				Utils.xPos *= Betterf3Config.generalConfig.animationSpeed;
+				Utils.xPos *= GeneralOptions.animationSpeed;
 
 				if(Utils.xPos >= 300){
 					Utils.closingAnimation = false;

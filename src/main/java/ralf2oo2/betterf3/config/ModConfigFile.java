@@ -15,7 +15,17 @@ import java.util.List;
 
 public class ModConfigFile {
     public static Runnable saveRunnable = () -> {
-        FileConfig config = FileConfig.builder(Paths.get("config/betterf3/modules.json")).concurrent().autosave().build();
+        FileConfig config = FileConfig.builder(Paths.get("config/betterf3.json")).concurrent().autosave().build();
+
+        Config general = Config.inMemory();
+        general.set("disable_mod", GeneralOptions.disableMod);
+        general.set("space_modules", GeneralOptions.spaceEveryModule);
+        general.set("shadow_text", GeneralOptions.shadowText);
+        general.set("animations", GeneralOptions.enableAnimations);
+        general.set("animationSpeed", GeneralOptions.animationSpeed);
+        general.set("background_color", GeneralOptions.backgroundColor);
+        general.set("disable_lagometer", GeneralOptions.disableLagometer);
+        general.set("show_background", GeneralOptions.showBackground);
 
         List<Config> configsLeft = new ArrayList<>();
 
@@ -37,10 +47,12 @@ public class ModConfigFile {
 
         config.set("modules_left", configsLeft);
         config.set("modules_right", configsRight);
+
+        config.set("general", general);
     };
 
     public static void load(){
-        File file = new File("config/betterf3/modules.json");
+        File file = new File("config/betterf3.json");
 
         if (!file.exists()) {
             return;
@@ -93,6 +105,19 @@ public class ModConfigFile {
 
         if (!modulesRight.isEmpty()) {
             BaseModule.modulesRight = modulesRight;
+        }
+
+        Config general = config.getOrElse("general", () -> null);
+
+        if (general != null) {
+            GeneralOptions.disableMod = general.getOrElse("disable_mod", false);
+            GeneralOptions.spaceEveryModule = general.getOrElse("space_modules", false);
+            GeneralOptions.shadowText = general.getOrElse("shadow_text", true);
+            GeneralOptions.enableAnimations = general.getOrElse("animations", true);
+            GeneralOptions.animationSpeed = general.getOrElse("animationSpeed", 1.0);
+            GeneralOptions.backgroundColor = general.getOrElse("background_color", 0x6F505050);
+            GeneralOptions.disableLagometer = general.getOrElse("disable_lagometer", true);
+            GeneralOptions.showBackground = general.getOrElse("show_background", true);
         }
 
         config.close();

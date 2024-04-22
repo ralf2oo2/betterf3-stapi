@@ -4,6 +4,7 @@ import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.resource.language.TranslationStorage;
 import ralf2oo2.betterf3.config.ModConfigFile;
+import ralf2oo2.betterf3.config.gui.ConfigScreen;
 import ralf2oo2.betterf3.config.gui.widgets.ModuleListWidget;
 import ralf2oo2.betterf3.modules.BaseModule;
 import ralf2oo2.betterf3.utils.IOnCloseHandler;
@@ -34,7 +35,7 @@ public class ModulesScreen extends Screen implements IOnCloseHandler {
         }
         // Edit button
         if(button.id == 1){
-            minecraft.setScreen(new EditModuleScreen(this, this.modulesListWidget.moduleEntries.get(modulesListWidget.selectedModuleIndex).module));
+            minecraft.setScreen(new EditModuleConfigScreen(this, this.modulesListWidget.moduleEntries.get(modulesListWidget.selectedModuleIndex).module));
         }
         // Add button
         if(button.id == 2){

@@ -7,8 +7,7 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import ralf2oo2.betterf3.config.Betterf3Config;
-import ralf2oo2.betterf3.config.GeneralConfig;
+import ralf2oo2.betterf3.config.GeneralOptions;
 import ralf2oo2.betterf3.utils.IOnCloseHandler;
 
 @Mixin(Minecraft.class)
@@ -17,7 +16,7 @@ public class MinecraftMixin {
 
     @Inject(at = @At(value = "HEAD"), method = "method_2111", cancellable = true)
     private void betterf3_disableLagometer(CallbackInfo ci) {
-        if(Betterf3Config.generalConfig.disableLagometer){
+        if(GeneralOptions.disableLagometer){
             ci.cancel();
         }
     }

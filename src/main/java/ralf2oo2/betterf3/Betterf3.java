@@ -1,12 +1,15 @@
 package ralf2oo2.betterf3;
 
-import net.glasslauncher.mods.api.gcapi.api.GConfig;
-import ralf2oo2.betterf3.config.GeneralConfig;
+import net.modificationstation.stationapi.api.mod.entrypoint.Entrypoint;
+import net.modificationstation.stationapi.api.util.Namespace;
+import net.modificationstation.stationapi.api.util.Null;
 import ralf2oo2.betterf3.config.ModConfigFile;
 import ralf2oo2.betterf3.modules.*;
 import ralf2oo2.betterf3.utils.PositionEnum;
 
 public class Betterf3 {
+    @Entrypoint.Namespace
+    public static final Namespace MODID = Null.get();
     public Betterf3() {
         new MinecraftModule().init();
         new FpsModule().init();

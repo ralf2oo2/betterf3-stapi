@@ -4,11 +4,11 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.util.CharacterUtils;
-import net.modificationstation.stationapi.api.util.math.ColorHelper;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
 import ralf2oo2.betterf3.config.gui.IConfigLineParentHandler;
 import ralf2oo2.betterf3.mixin.DrawContextAccessor;
+import ralf2oo2.betterf3.utils.InputTypeEnum;
 
 import java.util.function.Consumer;
 
@@ -16,9 +16,8 @@ public class ConfigLineWidget {
     public final int id;
     private final Screen parent;
     private final Minecraft minecraft;
-    private final int inputType;
+    private final InputTypeEnum inputType;
     private final String title;
-    private final String tooltip;
     private final Consumer<Object> saveConsumer;
     private int margin = 50;
     public boolean inputError = false;
@@ -27,30 +26,50 @@ public class ConfigLineWidget {
     private Object defaultValue;
     private String textBoxValue = "";
     private int textBoxMaxLength = 15;
+    private double minValue = 0d;
+    private double maxValue = 100d;
 
-    public ConfigLineWidget(int id, Screen parent, Minecraft minecraft, int inputType, String title, Consumer<Object> saveConsumer){
+    public ConfigLineWidget(int id, Screen parent, Minecraft minecraft, InputTypeEnum inputType, String title, Consumer<Object> saveConsumer){
         this.id = id;
         this.parent = parent;
         this.minecraft = minecraft;
         this.inputType = inputType;
         this.title = title;
         this.saveConsumer = saveConsumer;
-        this.tooltip = "remove this";
         switch (inputType){
-            case 1:
+            case RGB:
                 textBoxMaxLength = 6;
                 break;
+            case RGBA:
+                textBoxMaxLength = 8;
         }
     }
 
     public void processValue(){
         switch(inputType){
-            case 0:
+            case BOOLEAN:
                 break;
-            case 1:
+            case RGB:
+            case RGBA:
                 inputError = false;
                 try{
                     value = Integer.parseInt(textBoxValue, 16);
+                } catch (Exception e){
+                    inputError = true;
+                }
+                break;
+            case DOUBLE:
+                inputError = false;
+                try {
+                    value = Double.parseDouble(textBoxValue);
+                    if((double)value < minValue){
+                        value = minValue;
+                        refreshInputs();
+                    }
+                    if((double)value > maxValue){
+                        value = maxValue;
+                        refreshInputs();
+                    }
                 } catch (Exception e){
                     inputError = true;
                 }
@@ -60,8 +79,12 @@ public class ConfigLineWidget {
 
     private void refreshInputs(){
         switch(inputType){
-            case 1:
+            case RGB:
+            case RGBA:
                 textBoxValue = String.format("%02x", (int)value);
+                break;
+            case DOUBLE:
+                textBoxValue = String.valueOf((double)value);
                 break;
             default:
                 break;
@@ -73,7 +96,7 @@ public class ConfigLineWidget {
         refreshInputs();
 
     }
-    public void render(int x, int y, int mouseX, int mouseY, float delta){
+    public void render(int x, int y, int mouseX, int mouseY, boolean canClickControls, float delta){
         DrawContext drawContext = new DrawContext();
         int color = 0xFFFFFF;
         if(inputError){
@@ -81,19 +104,11 @@ public class ConfigLineWidget {
         }
         if(isInLine(x, y, mouseX, mouseY, parent.width)){
             //((DrawContextAccessor)drawContext).invokeFill(x, y, parent.width, 20, 0xFFFFFFFF);
-            renderTooltip(mouseX, mouseY);
         }
         drawContext.drawTextWithShadow(minecraft.textRenderer, title, x + margin, y + 6, color);
-        this.renderResetButton(y, mouseX, mouseY);
-        this.renderInput(y, mouseX, mouseY);
+        this.renderResetButton(y, mouseX, mouseY, canClickControls);
+        this.renderInput(y, mouseX, mouseY, canClickControls);
 
-    }
-
-    private void renderTooltip(int mouseX, int mouseY){
-        DrawContext drawContext = new DrawContext();
-        int textWidth = minecraft.textRenderer.getWidth(tooltip);
-        //((DrawContextAccessor)drawContext).invokeFill(mouseX, mouseY - 10, textWidth + 10, 10, Integer.MIN_VALUE);
-        drawContext.drawTextWithShadow(minecraft.textRenderer, tooltip, mouseX + 5, mouseY - 8, 0xFFFFFF);
     }
 
     private int getButtonStateTextColor(int buttonState){
@@ -112,20 +127,21 @@ public class ConfigLineWidget {
         return color;
     }
 
-    private void renderResetButton(int y, int mouseX, int mouseY){
+    private void renderResetButton(int y, int mouseX, int mouseY, boolean canClickControls){
         DrawContext drawContext = new DrawContext();
 
         int width = 50;
         int height = 20;
         int buttonState = 1;
-        if(value != null && defaultValue != null && value == defaultValue){
+        if(value != null && defaultValue != null && value.equals(defaultValue)){
             buttonState = 0;
         }
 
-        if(isInLine(parent.width - margin - width, y, mouseX, mouseY, width) && buttonState == 1){
+        if(isInLine(parent.width - margin - width, y, mouseX, mouseY, width) && buttonState == 1 && canClickControls){
             buttonState = 2;
             if(Mouse.isButtonDown(0)){
                 resetValue();
+                this.minecraft.soundManager.method_2009("random.click", 1.0F, 1.0F);
             }
         }
 
@@ -177,18 +193,19 @@ public class ConfigLineWidget {
         }
     }
 
-    private void renderInput(int y, int mouseX, int mouseY){
+    private void renderInput(int y, int mouseX, int mouseY, boolean canClickControls){
         switch(inputType){
-            case 0:
-                renderBooleanInput(y, mouseX, mouseY);
+            case BOOLEAN:
+                renderBooleanInput(y, mouseX, mouseY, canClickControls);
                 break;
-            case 1:
-            case 2:
-                renderTextInput(y, mouseX, mouseY);
+            case RGB:
+            case RGBA:
+            case DOUBLE:
+                renderTextInput(y, mouseX, mouseY, canClickControls);
                 break;
         }
     }
-    private void renderBooleanInput(int y, int mouseX, int mouseY){
+    private void renderBooleanInput(int y, int mouseX, int mouseY, boolean canClickControls){
         int width = 104;
         int height = 20;
 
@@ -196,7 +213,7 @@ public class ConfigLineWidget {
 
         int x = parent.width - margin - 50 - 2 - width;
 
-        boolean isInBox = isInLine(x, y - 2, mouseX, mouseY, width);
+        boolean isInBox = isInLine(x, y - 2, mouseX, mouseY, width) && canClickControls;
         if(isInBox){
             buttonState = 2;
         }
@@ -206,6 +223,7 @@ public class ConfigLineWidget {
                 inputClicked = true;
                 ((IConfigLineParentHandler)parent).setFocusedId(this.id);
                 this.value = !(boolean)value;
+                this.minecraft.soundManager.method_2009("random.click", 1.0F, 1.0F);
             }
         } else {
             inputClicked = false;
@@ -219,7 +237,7 @@ public class ConfigLineWidget {
 
         drawContext.drawCenteredTextWithShadow(minecraft.textRenderer, (boolean)value ? "Yes" : "No", x + width / 2, y + 6, (boolean)value ? 0x55FF55 : 0xFF5555);
     }
-    private void renderTextInput(int y, int mouseX, int mouseY){
+    private void renderTextInput(int y, int mouseX, int mouseY, boolean canClickControls){
         DrawContext drawContext = new DrawContext();
         y = y + 2;
         int width = 100;
@@ -228,16 +246,16 @@ public class ConfigLineWidget {
         int x = parent.width - margin - 50 - 4 - width;
         boolean isInBox = isInLine(x, y - 2, mouseX, mouseY, width);
 
-        if(Mouse.isButtonDown(0) && isInBox){
+        if(Mouse.isButtonDown(0) && isInBox && canClickControls){
             ((IConfigLineParentHandler)parent).setFocusedId(this.id);
         }
 
         ((DrawContextAccessor)drawContext).invokeFill(x- 1, y - 1, x + width + 1, y + height + 1, -6250336);
         ((DrawContextAccessor)drawContext).invokeFill(x, y, x + width, y + height, -16777216);
 
-        drawContext.drawTextWithShadow(minecraft.textRenderer, (inputType == 1 ? "#" : "") + textBoxValue + (((IConfigLineParentHandler)parent).getFocusedId() == this.id ? "_" : ""), x + 4, y + (height - 8) / 2, (inputError ? 0xAA0000 : 14737632));
+        drawContext.drawTextWithShadow(minecraft.textRenderer, (inputType == InputTypeEnum.RGB || inputType == InputTypeEnum.RGBA ? "#" : "") + textBoxValue + (((IConfigLineParentHandler)parent).getFocusedId() == this.id ? "_" : ""), x + 4, y + (height - 8) / 2, (inputError ? 0xAA0000 : 14737632));
 
-        if(inputType == 1){
+        if(inputType == InputTypeEnum.RGB || inputType == InputTypeEnum.RGBA){
             minecraft.textureManager.bindTexture(minecraft.textureManager.getTextureId("/assets/betterf3/gui/gui.png"));
             GL11.glColor3f(1f, 1f, 1f);
             drawContext.drawTexture(x - 24, y - 2, 0, 0, 20, 20);
@@ -248,7 +266,10 @@ public class ConfigLineWidget {
             float red = (float)(color >> 16 & 255) / 255.0F;
             float green = (float)(color >> 8 & 255) / 255.0F;
             float blue = (float)(color & 255) / 255.0F;
-            GL11.glColor3f(red, green, blue);
+            float alpha = (float)(color >> 24 & 255) / 255.0F;
+            GL11.glColor4f(0, 0, 0, 0);
+            drawContext.drawTexture(x - 24, y - 2, 20, 0, 20, 20);
+            GL11.glColor4f(red, green, blue, alpha);
             drawContext.drawTexture(x - 24, y - 2, 20, 0, 20, 20);
         }
     }
@@ -264,5 +285,13 @@ public class ConfigLineWidget {
 
     public void setDefaultValue(Object defaultValue) {
         this.defaultValue = defaultValue;
+    }
+
+    public void setMinimumValue(double minValue){
+        this.minValue = minValue;
+    }
+
+    public void setMaximumValue(double maxValue){
+        this.maxValue = maxValue;
     }
 }

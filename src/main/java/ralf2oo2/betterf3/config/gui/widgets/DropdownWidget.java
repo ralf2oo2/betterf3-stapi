@@ -80,6 +80,7 @@ public class DropdownWidget{
                 } else {
                     isOpen = false;
                 }
+                this.minecraft.soundManager.method_2009("random.click", 1.0F, 1.0F);
             }
         } else {
             clickedOpen = false;
@@ -107,6 +108,7 @@ public class DropdownWidget{
                     if(Mouse.isButtonDown(0) && isOnItem){
                         selectedIndex = i - 1;
                         isOpen = false;
+                        this.minecraft.soundManager.method_2009("random.click", 1.0F, 1.0F);
                     }
                 }
             }

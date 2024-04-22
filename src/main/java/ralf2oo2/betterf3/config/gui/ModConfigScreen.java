@@ -20,6 +20,9 @@ public class ModConfigScreen extends Screen {
         ButtonWidget rightModules = new ButtonWidget(1, this.width / 2 + 10, this.height/4, 120, 20, TranslationStorage.getInstance().get("config-bettef3-order_right_button"));
         this.buttons.add(rightModules);
 
+        ButtonWidget generalSettings = new ButtonWidget(3, this.width / 2 - 130, this.height/4 - 24, 260, 20, TranslationStorage.getInstance().get("config-bettef3-general_settings"));
+        this.buttons.add(generalSettings);
+
         ButtonWidget done = new ButtonWidget(2, this.width / 2 - 130, this.height - 50, 260, 20, TranslationStorage.getInstance().get("config-betterf3-modules-done_button"));
         this.buttons.add(done);
     }
@@ -38,6 +41,9 @@ public class ModConfigScreen extends Screen {
         }
         if(button.id == 1){
             minecraft.setScreen(new ModulesScreen(this, PositionEnum.RIGHT));
+        }
+        if(button.id == 3){
+            minecraft.setScreen(new GeneralConfigScreen(this));
         }
         if(button.id == 2){
             minecraft.setScreen(null);
