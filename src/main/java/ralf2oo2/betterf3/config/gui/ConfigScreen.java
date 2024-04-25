@@ -45,11 +45,15 @@ public class ConfigScreen extends Screen implements IConfigLineParentHandler {
         if(button.id == 1){
             setFocusedId(-1);
             if(getInputErrors() == 0){
-                for(ConfigLineWidget line : configLines){
-                    line.saveChanges();
-                }
+                save();
                 minecraft.setScreen(parent);
             }
+        }
+    }
+
+    protected void save(){
+        for(ConfigLineWidget line : configLines){
+            line.saveChanges();
         }
     }
 

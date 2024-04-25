@@ -72,6 +72,9 @@ public class InGameHudMixin extends DrawContext {
 	@Debug(export = true)
 	@Inject(at = @At(value = "INVOKE", target = "Lorg/lwjgl/opengl/GL11;glEnable(I)V", ordinal = 2), method = "render", remap = false)
 	private void betterf3_beforeRenderDebug(CallbackInfo ci) {
+		if(GeneralOptions.disableMod) {
+			return;
+		}
 		originalDebugHudValue = minecraft.options.debugHud;
 		minecraft.options.debugHud = false;
 		betterf3_renderAnimation();
@@ -83,6 +86,7 @@ public class InGameHudMixin extends DrawContext {
 
 	@Inject(at = @At(value = "TAIL"), method = "render")
 	private void betterf3_afterRender(CallbackInfo ci) {
+		if(GeneralOptions.disableMod) return;
 		minecraft.options.debugHud = originalDebugHudValue;
 	}
 

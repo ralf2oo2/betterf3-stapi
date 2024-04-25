@@ -24,6 +24,7 @@ public class ConfigLineWidget {
     private boolean inputClicked = false;
     private Object value;
     private Object defaultValue;
+    private Object originalValue;
     private String textBoxValue = "";
     private int textBoxMaxLength = 15;
     private double minValue = 0d;
@@ -101,6 +102,8 @@ public class ConfigLineWidget {
         int color = 0xFFFFFF;
         if(inputError){
             color = 0xAA0000;
+        } else if(!originalValue.equals(value)){
+            color = 0xFFFF55;
         }
         if(isInLine(x, y, mouseX, mouseY, parent.width)){
             //((DrawContextAccessor)drawContext).invokeFill(x, y, parent.width, 20, 0xFFFFFFFF);
@@ -267,6 +270,7 @@ public class ConfigLineWidget {
             float green = (float)(color >> 8 & 255) / 255.0F;
             float blue = (float)(color & 255) / 255.0F;
             float alpha = (float)(color >> 24 & 255) / 255.0F;
+            if(alpha == 0) alpha = 1;
             GL11.glColor4f(0, 0, 0, 0);
             drawContext.drawTexture(x - 24, y - 2, 20, 0, 20, 20);
             GL11.glColor4f(red, green, blue, alpha);
@@ -280,6 +284,7 @@ public class ConfigLineWidget {
 
     public void setValue(Object value){
         this.value = value;
+        this.originalValue = value;
         refreshInputs();
     }
 

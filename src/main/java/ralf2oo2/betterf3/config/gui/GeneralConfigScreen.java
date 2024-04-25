@@ -3,6 +3,7 @@ package ralf2oo2.betterf3.config.gui;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.resource.language.TranslationStorage;
 import ralf2oo2.betterf3.config.GeneralOptions;
+import ralf2oo2.betterf3.config.ModConfigFile;
 import ralf2oo2.betterf3.config.gui.widgets.ConfigLineWidget;
 import ralf2oo2.betterf3.utils.InputTypeEnum;
 
@@ -78,5 +79,11 @@ public class GeneralConfigScreen extends ConfigScreen{
         disableLagometer.setDefaultValue(true);
         disableLagometer.setValue(GeneralOptions.disableLagometer);
         configLines.add(disableLagometer);
+    }
+
+    @Override
+    protected void save() {
+        super.save();
+        ModConfigFile.saveRunnable.run();
     }
 }
