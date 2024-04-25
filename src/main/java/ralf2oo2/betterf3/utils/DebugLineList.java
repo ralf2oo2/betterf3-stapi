@@ -4,12 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DebugLineList extends DebugLine{
-    private List<String> values = new ArrayList<>();
+    private List<Object> values = new ArrayList<>();
     public DebugLineList(String id) {
         super(id);
     }
 
-    public void values(final List<String> values){
+    public void setValues(final List<Object> values){
         this.values = values;
         this.active = true;
     }
@@ -17,8 +17,17 @@ public class DebugLineList extends DebugLine{
     public List<Text> toTexts(final Integer nameColor, final Integer valueColor){
         final List<Text> texts = new ArrayList<>();
 
-        for(final String v : this.values){
-            texts.add(Utils.formattedFromString(v, nameColor, valueColor));
+        if(values.stream().count() > 0){
+            if(values.get(0) instanceof Text){
+                for(final Object v : this.values){
+                    texts.add((Text)v);
+                }
+            }
+            else{
+                for(final Object v : this.values){
+                    texts.add(Utils.formattedFromString((String)v, nameColor, valueColor));
+                }
+            }
         }
         return texts;
     }

@@ -2,6 +2,8 @@ package ralf2oo2.betterf3.utils;
 
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.Minecraft;
+import net.modificationstation.stationapi.api.state.property.Property;
+import net.modificationstation.stationapi.api.util.Util;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -99,5 +101,23 @@ public class Utils {
         }
 
         return false;
+    }
+
+    public static Text propertyToString(Map.Entry<Property<?>, Comparable<?>> propEntry, int keyColor, int valueColor){
+        Property<?> key = propEntry.getKey();
+        Comparable<?> value = propEntry.getValue();
+
+        Text newValue = new Text(new TextSection(getValueAsString(key, value), valueColor));
+        if(Boolean.TRUE.equals(value)){
+            newValue.getSection(0).color = 0x55FF55;
+        } else if (Boolean.FALSE.equals(value)){
+            newValue.getSection(0).color = 0xFF5555;
+        }
+        newValue = new Text(new TextSection(key.getName() + ": ", keyColor)).append(newValue.getSections());
+        return newValue;
+    }
+
+    public static <T extends Comparable<T>> String getValueAsString(Property<T> property, Object value) {
+        return property.name((T)value);
     }
 }
