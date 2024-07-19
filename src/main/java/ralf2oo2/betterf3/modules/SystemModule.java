@@ -3,6 +3,8 @@ package ralf2oo2.betterf3.modules;
 import net.minecraft.client.Minecraft;
 import org.apache.commons.lang3.ArrayUtils;
 import org.lwjgl.opengl.GL11;
+import oshi.SystemInfo;
+import oshi.hardware.CentralProcessor;
 import ralf2oo2.betterf3.utils.DebugLine;
 import ralf2oo2.betterf3.utils.Text;
 import ralf2oo2.betterf3.utils.TextSection;
@@ -51,9 +53,8 @@ public class SystemModule extends BaseModule{
         String openGlVersion = versionSplit[0];
         String gpuDriverVersion = String.join(" ", ArrayUtils.remove(versionSplit, 0));
 
-        String cpuInfo = "todo: fix this";
-
-
+        String cpuInfo = Utils.getProcessorInfo();
+        
         lines.get(0).setValue(javaVersion);
         lines.get(1).setValue(new Text( new TextSection(memoryUsage, Utils.getPercentColor((int) (usedMemory * 100 / maxMemory)))));
         lines.get(2).setValue(allocatedMemory);

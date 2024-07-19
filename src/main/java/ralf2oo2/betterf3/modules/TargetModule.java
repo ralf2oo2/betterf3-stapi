@@ -10,6 +10,8 @@ import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.hit.HitResultType;
 import net.minecraft.util.math.Vec3d;
 import net.modificationstation.stationapi.api.block.BlockState;
+import net.modificationstation.stationapi.api.event.registry.MobHandlerRegistryEvent;
+import net.modificationstation.stationapi.api.registry.MobHandlerRegistry;
 import ralf2oo2.betterf3.utils.*;
 
 import java.util.ArrayList;
@@ -24,10 +26,13 @@ public class TargetModule extends BaseModule{
         this.nameColor = defaultNameColor;
         this.valueColor = defaultValueColor;
 
+        DebugLine blockEntityLine = new DebugLine("block_entity");
+        blockEntityLine.enabled = false;
+
         lines.add(new DebugLine("targeted_block"));
         lines.add(new DebugLine("id_block"));
         lines.add(new DebugLine("block_meta"));
-        lines.add(new DebugLine("block_entity"));
+        lines.add(blockEntityLine);
         lines.add(new DebugLineList("block_states"));
         lines.add(new DebugLineList("block_tags"));
         lines.add(new DebugLine(""));
@@ -72,14 +77,12 @@ public class TargetModule extends BaseModule{
             lines.get(1).setValue(idBlock);
             lines.get(2).setValue(Integer.toString(minecraft.world.getBlockMeta(hitResult.blockX, hitResult.blockY, hitResult.blockZ)));
 
-            if (FabricLoader.getInstance().isDevelopmentEnvironment()) {
-                BlockEntity entity = minecraft.world.getBlockEntity(hitResult.blockX, hitResult.blockY, hitResult.blockZ);
-                if (entity != null) {
-                    String className = entity.getClass().getName();
-                    lines.get(3).setValue(className.substring(className.lastIndexOf('.') + 1));
-                } else{
-                    lines.get(3).active = false;
-                }
+            BlockEntity entity = minecraft.world.getBlockEntity(hitResult.blockX, hitResult.blockY, hitResult.blockZ);
+            if (entity != null) {
+                String className = entity.getClass().getName();
+                lines.get(3).setValue(className.substring(className.lastIndexOf('.') + 1));
+            } else{
+                lines.get(3).active = false;
             }
 
             BlockState blockState = minecraft.world.getBlockState(hitResult.blockX, hitResult.blockY, hitResult.blockZ);

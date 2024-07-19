@@ -4,12 +4,17 @@ import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.Minecraft;
 import net.modificationstation.stationapi.api.state.property.Property;
 import net.modificationstation.stationapi.api.util.Util;
+import oshi.SystemInfo;
+import oshi.hardware.CentralProcessor;
 
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
 public class Utils {
+
+    private static String cpuInfo = "";
+
     // Animation stuff
     public static final int START_X_POS = 200;
     public static int xPos = START_X_POS;
@@ -35,6 +40,17 @@ public class Utils {
       put("e", 0xFFFF55);
       put("f", 0xFFFFFF);
     }};
+
+    public static String getProcessorInfo(){
+        if(cpuInfo == ""){
+            try {
+                CentralProcessor processor = (new SystemInfo()).getHardware().getProcessor();
+                cpuInfo = String.format("%dx %s", processor.getLogicalProcessorCount(), processor.getProcessorIdentifier().getName()).replaceAll("\\s+", " ");
+            } catch (Throwable var4) {
+            }
+        }
+        return cpuInfo;
+    }
 
     // Other
     public static Minecraft getMc(){
