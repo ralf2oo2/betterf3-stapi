@@ -14,23 +14,23 @@ public class ModConfigScreen extends Screen {
     }
 
     public void registerButtons(){
-        ButtonWidget leftModules = new ButtonWidget(0, this.width / 2 - 130, this.height/4, 120, 20, TranslationStorage.getInstance().get("config-bettef3-order_left_button"));
+        ButtonWidget leftModules = new ButtonWidget(0, this.width / 2 - 130, this.height/4, 120, 20, TranslationStorage.getInstance().get("config.bettef3.order_left_button"));
         this.buttons.add(leftModules);
 
-        ButtonWidget rightModules = new ButtonWidget(1, this.width / 2 + 10, this.height/4, 120, 20, TranslationStorage.getInstance().get("config-bettef3-order_right_button"));
+        ButtonWidget rightModules = new ButtonWidget(1, this.width / 2 + 10, this.height/4, 120, 20, TranslationStorage.getInstance().get("config.bettef3.order_right_button"));
         this.buttons.add(rightModules);
 
-        ButtonWidget generalSettings = new ButtonWidget(3, this.width / 2 - 130, this.height/4 - 24, 260, 20, TranslationStorage.getInstance().get("config-bettef3-general_settings"));
+        ButtonWidget generalSettings = new ButtonWidget(3, this.width / 2 - 130, this.height/4 - 24, 260, 20, TranslationStorage.getInstance().get("config.bettef3.general_settings"));
         this.buttons.add(generalSettings);
 
-        ButtonWidget done = new ButtonWidget(2, this.width / 2 - 130, this.height - 50, 260, 20, TranslationStorage.getInstance().get("config-betterf3-modules-done_button"));
+        ButtonWidget done = new ButtonWidget(2, this.width / 2 - 130, this.height - 50, 260, 20, TranslationStorage.getInstance().get("config.betterf3.modules.done_button"));
         this.buttons.add(done);
     }
 
     @Override
     public void render(int mouseX, int mouseY, float delta) {
         this.renderBackground();
-        this.drawCenteredTextWithShadow(this.textRenderer, TranslationStorage.getInstance().get("config-betterf3-title-config"), this.width / 2, 20, 16777215);
+        this.drawCenteredTextWithShadow(this.textRenderer, TranslationStorage.getInstance().get("config.betterf3.title.config"), this.width / 2, 20, 16777215);
         super.render(mouseX, mouseY, delta);
     }
 

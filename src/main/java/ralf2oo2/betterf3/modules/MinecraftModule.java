@@ -12,7 +12,7 @@ public class MinecraftModule extends BaseModule{
         this.nameColor = defaultNameColor;
         this.valueColor = defaultValueColor;
 
-        lines.add(new DebugLine("minecraft", "format-betterf3-default_no_colon", false));
+        lines.add(new DebugLine("minecraft", "format.betterf3.default_no_colon", false));
         lines.get(0).inReducedDebug = true;
     }
     @Override

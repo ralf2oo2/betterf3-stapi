@@ -24,10 +24,10 @@ public class CoordsModule extends BaseModule{
         this.colorY = defaultColorY;
         this.colorZ = defaultColorZ;
 
-        lines.add(new DebugLine("player_coords", "format-betterf3-coords", true));
-        lines.add(new DebugLine("block_coords", "format-betterf3-coords", true));
-        lines.add(new DebugLine("chunk_relative_coords", "format-betterf3-coords", true));
-        lines.add(new DebugLine("chunk_coords", "format-betterf3-coords", true));
+        lines.add(new DebugLine("player_coords", "format.betterf3.coords", true));
+        lines.add(new DebugLine("block_coords", "format.betterf3.coords", true));
+        lines.add(new DebugLine("chunk_relative_coords", "format.betterf3.coords", true));
+        lines.add(new DebugLine("chunk_coords", "format.betterf3.coords", true));
         lines.get(2).inReducedDebug = true;
     }
 

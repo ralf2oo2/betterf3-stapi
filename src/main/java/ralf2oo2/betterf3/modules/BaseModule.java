@@ -109,7 +109,7 @@ public abstract class BaseModule {
     }
 
     public String toString() {
-        return TranslationStorage.getInstance().get("text-betterf3-module-" + id);
+        return TranslationStorage.getInstance().get("text.betterf3.module." + id);
     }
 
 

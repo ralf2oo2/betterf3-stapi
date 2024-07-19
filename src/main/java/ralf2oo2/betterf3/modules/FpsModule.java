@@ -19,7 +19,7 @@ public class FpsModule extends BaseModule{
     public Integer defaultColorLow = 0xFF5555;
 
     public FpsModule(){
-        lines.add(new DebugLine("fps", "format-betterf3-fps", true));
+        lines.add(new DebugLine("fps", "format.betterf3.fps", true));
         lines.get(0).inReducedDebug = true;
 
         colorHigh = defaultColorHigh;

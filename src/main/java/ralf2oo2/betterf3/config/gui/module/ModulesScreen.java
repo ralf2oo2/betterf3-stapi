@@ -53,18 +53,18 @@ public class ModulesScreen extends Screen implements IOnCloseHandler {
     }
 
     public void registerButtons(){
-        ButtonWidget deleteButton = new ButtonWidget(0, this.width / 2 - 154, this.height - 50, 100, 20, TranslationStorage.getInstance().get("config-betterf3-modules-delete_button"));
+        ButtonWidget deleteButton = new ButtonWidget(0, this.width / 2 - 154, this.height - 50, 100, 20, TranslationStorage.getInstance().get("config.betterf3.modules.delete_button"));
         deleteButton.active = false;
         this.buttons.add(deleteButton);
 
-        ButtonWidget editButton = new ButtonWidget(1, this.width / 2 - 50, this.height - 50, 100, 20, TranslationStorage.getInstance().get("config-betterf3-modules-edit_button"));
+        ButtonWidget editButton = new ButtonWidget(1, this.width / 2 - 50, this.height - 50, 100, 20, TranslationStorage.getInstance().get("config.betterf3.modules.edit_button"));
         editButton.active = false;
         this.buttons.add(editButton);
 
-        ButtonWidget addButton = new ButtonWidget(2, this.width / 2 + 4 + 50, this.height - 50, 100, 20, TranslationStorage.getInstance().get("config-betterf3-modules-add_button"));
+        ButtonWidget addButton = new ButtonWidget(2, this.width / 2 + 4 + 50, this.height - 50, 100, 20, TranslationStorage.getInstance().get("config.betterf3.modules.add_button"));
         this.buttons.add(addButton);
 
-        ButtonWidget doneButton = new ButtonWidget(3, this.width / 2 - 154, this.height - 30 + 4, 300 + 8, 20, TranslationStorage.getInstance().get("config-betterf3-modules-done_button"));
+        ButtonWidget doneButton = new ButtonWidget(3, this.width / 2 - 154, this.height - 30 + 4, 300 + 8, 20, TranslationStorage.getInstance().get("config.betterf3.modules.done_button"));
         this.buttons.add(doneButton);
     }
 

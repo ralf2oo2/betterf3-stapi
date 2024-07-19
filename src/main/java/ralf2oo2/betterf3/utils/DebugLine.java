@@ -18,7 +18,7 @@ public class DebugLine {
 
     public DebugLine(String id) {
         this.id = id;
-        this.format = "format-betterf3-default_format";
+        this.format = "format.betterf3.default_format";
         this.value = "";
     }
 
@@ -84,7 +84,7 @@ public class DebugLine {
             return "";
         }
         TranslationStorage translationStorage = TranslationStorage.getInstance();
-        return translationStorage.get("text-betterf3-line-" + id);
+        return translationStorage.get("text.betterf3.line." + id);
     }
 
     public String getId() {

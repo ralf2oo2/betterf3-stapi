@@ -21,7 +21,7 @@ public class AddModuleScreen extends Screen {
     }
 
     private void registerButtons(){
-        ButtonWidget saveButton = new ButtonWidget(0, this.width / 2 - 100, this.height - 100, 200, 20, TranslationStorage.getInstance().get("config-betterf3-modules-add_button"));
+        ButtonWidget saveButton = new ButtonWidget(0, this.width / 2 - 100, this.height - 100, 200, 20, TranslationStorage.getInstance().get("config.betterf3.modules.add_button"));
         this.buttons.add(saveButton);
     }
 
