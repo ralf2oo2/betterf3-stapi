@@ -17,11 +17,6 @@ import java.nio.IntBuffer;
 
 @Mixin(TextRenderer.class)
 public abstract class TextRendererMixin implements ITextRenderer {
-    @Shadow int field_2461;
-
-    @Shadow private IntBuffer field_2464;
-
-    @Shadow private int field_2463;
 
     @Shadow public abstract void draw(String text, int x, int y, int color);
 

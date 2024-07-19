@@ -33,7 +33,7 @@ public class InGameHudMixin extends DrawContext {
 			}
 			module.update(minecraft);
 
-			// Change this to check for reduced debug
+			// TODO: Change this to check for reduced debug
 			list.addAll(module.getLinesFormatted(false));
 
 			if (GeneralOptions.spaceEveryModule) {
@@ -53,7 +53,7 @@ public class InGameHudMixin extends DrawContext {
 			}
 			module.update(minecraft);
 
-			// Change this to check for reduced debug
+			// TODO: Change this to check for reduced debug
 			list.addAll(module.getLinesFormatted(false));
 
 			if (GeneralOptions.spaceEveryModule) {
@@ -62,11 +62,6 @@ public class InGameHudMixin extends DrawContext {
 		}
 
 		return list;
-	}
-
-	@Inject(at = @At(value = "HEAD"), method = "render")
-	private void betterf3_render(CallbackInfo ci) {
-
 	}
 
 	@Debug(export = true)
@@ -155,6 +150,7 @@ public class InGameHudMixin extends DrawContext {
 			}
 
 			if(Utils.closingAnimation){
+				if(!GeneralOptions.enableAnimations) Utils.showDebug = false;
 				Utils.xPos += i;
 				Utils.xPos *= GeneralOptions.animationSpeed;
 

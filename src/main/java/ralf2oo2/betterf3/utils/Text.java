@@ -70,27 +70,6 @@ public class Text {
         );
     }
 
-//    public static Text format(String format, int formatColor, Text... texts){
-//        String formatString = TranslationStorage.getInstance().get(format);
-//        String formatStrings[] = formatString.split("%s");
-//        if(formatStrings.length <= 1){
-//            return new Text(new TextSection(formatString, formatColor));
-//        }
-//        Text finalText = new Text(new TextSection(formatStrings[0], formatColor));
-//        if(texts[0] != null){
-//            finalText = finalText.append(texts[0].getSections());
-//        }
-//        for(int i = 1; i < formatStrings.length; i++){
-//            if(i > texts.length - 1){
-//                continue;
-//            }
-//            finalText = finalText.append(new TextSection(formatStrings[i], formatColor));
-//            if(texts[i] != null){
-//                finalText = finalText.append(texts[i].getSections());
-//            }
-//        }
-//        return finalText;
-//    }
     public static Text format(String format, Integer formatColor, Text... texts){
         List<TextSection> sections = new ArrayList<>();
         String formatString = TranslationStorage.getInstance().get(format);

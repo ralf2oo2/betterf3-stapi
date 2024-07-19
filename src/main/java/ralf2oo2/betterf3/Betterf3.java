@@ -6,6 +6,7 @@ import net.modificationstation.stationapi.api.util.Null;
 import ralf2oo2.betterf3.config.ModConfigFile;
 import ralf2oo2.betterf3.modules.*;
 import ralf2oo2.betterf3.utils.PositionEnum;
+import ralf2oo2.betterf3.utils.Utils;
 
 public class Betterf3 {
     @Entrypoint.Namespace
@@ -22,5 +23,8 @@ public class Betterf3 {
         BaseModule.modulesRight.add(EmptyModule.INSTANCE);
 
         ModConfigFile.load();
+
+        // Loads processor info when launching to avoid a stutter when opening the debug hud for the first time in a session
+        Utils.getProcessorInfo();
     }
 }
