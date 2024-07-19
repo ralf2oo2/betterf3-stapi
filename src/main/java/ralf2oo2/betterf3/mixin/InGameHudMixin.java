@@ -1,9 +1,9 @@
 package ralf2oo2.betterf3.mixin;
-import joptsimple.internal.Strings;
 import net.minecraft.class_564;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.hud.InGameHud;
+import org.apache.commons.lang3.StringUtils;
 import org.spongepowered.asm.mixin.Debug;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -88,7 +88,7 @@ public class InGameHudMixin extends DrawContext {
 	private void betterf3_renderLeftText(){
 		List<Text> list = getNewLeftText();
 		for(int i = 0; i < list.size(); i++){
-			if(!Strings.isNullOrEmpty(list.get(i).toString())){
+			if(!StringUtils.isEmpty(list.get(i).toString())){
 				int height = 9;
 				int width = minecraft.textRenderer.getWidth(list.get(i).toString());
 				int y = 2 + height * i;
@@ -112,7 +112,7 @@ public class InGameHudMixin extends DrawContext {
 	private void betterf3_renderRightText(){
 		List<Text> list = getNewRightText();
 		for(int i = 0; i < list.size(); i++){
-			if(!Strings.isNullOrEmpty(list.get(i).toString())){
+			if(!StringUtils.isEmpty(list.get(i).toString())){
 				int height = 9;
 				int width = minecraft.textRenderer.getWidth(list.get(i).toString());
 				class_564 scaledResolution = new class_564(this.minecraft.options, this.minecraft.displayWidth, this.minecraft.displayHeight);
