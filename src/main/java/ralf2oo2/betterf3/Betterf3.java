@@ -16,11 +16,13 @@ public class Betterf3 {
         new FpsModule().init();
         new CoordsModule().init();
         new LocationModule().init();
+        new EntityModule().init();
+
         BaseModule.modules.add(EmptyModule.INSTANCE);
 
         new SystemModule().init(PositionEnum.RIGHT);
-        new TargetModule().init(PositionEnum.RIGHT);
         BaseModule.modulesRight.add(EmptyModule.INSTANCE);
+        new TargetModule().init(PositionEnum.RIGHT);
 
         ModConfigFile.load();
 

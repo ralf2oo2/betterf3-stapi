@@ -89,7 +89,6 @@ public class DropdownWidget{
         if(isOpen){
             float xScale = (float) minecraft.displayWidth / parent.width;
             float yScale = (float) minecraft.displayHeight / parent.height;
-            System.out.println(xScale);
             GL11.glScissor((int)(x * xScale), (int)(minecraft.displayHeight - ((this.height + this.y) * yScale)), (int)(this.width * xScale), (int)((this.height - 20) * yScale));
             GL11.glEnable(GL11.GL_SCISSOR_TEST);
             for(int i = 1; i <= getItemCount(); i++){
