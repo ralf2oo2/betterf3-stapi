@@ -3,17 +3,16 @@
   "id": "betterf3",
   "version": "${version}",
 
-  "name": "Better F3",
-  "description": "This is an example description! Tell everyone what your mod is about!",
+  "name": "BetterF3",
+  "description": "Replaces Minecraft's original debug HUD with a highly customizable, more human-readable HUD.",
   "authors": [
-    "Me!"
+    "cominixo", "ralf2oo2"
   ],
   "contact": {
-    "homepage": "https://glass-launcher.net/",
-    "sources": "https://github.com/calmilamsy/stationapi-example-mod"
+    "sources": "https://github.com/ralf2oo2/betterf3-stapi"
   },
 
-  "license": "CC0-1.0",
+  "license": "MIT",
   "icon": "assets/betterf3/icon.png",
 
   "environment": "*",

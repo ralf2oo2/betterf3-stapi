@@ -5,13 +5,8 @@ import net.minecraft.client.resource.language.TranslationStorage;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.LightType;
 import net.minecraft.world.chunk.Chunk;
-import net.minecraft.world.dimension.Dimension;
 import net.modificationstation.stationapi.api.registry.DimensionContainer;
 import net.modificationstation.stationapi.api.registry.DimensionRegistry;
-import net.modificationstation.stationapi.api.registry.Registries;
-import net.modificationstation.stationapi.api.registry.Registry;
-import net.modificationstation.stationapi.api.util.Identifier;
-import net.modificationstation.stationapi.mixin.flattening.ChunkAccessor;
 import ralf2oo2.betterf3.utils.DebugLine;
 import ralf2oo2.betterf3.utils.Utils;
 
@@ -38,11 +33,9 @@ public class LocationModule extends BaseModule{
         lines.add(new DebugLine("facing"));
         lines.add(new DebugLine("rotation"));
         lines.add(new DebugLine("light"));
-        //lines.add(new DebugLine("light_server"));
         lines.add(new DebugLine("highest_block"));
-        //lines.add(new DebugLine("highest_block_server"));
         lines.add(new DebugLine("biome"));
-        lines.add(new DebugLine("local_difficulty"));
+        lines.add(new DebugLine("difficulty"));
         lines.add(new DebugLine("days_played"));
     }
     @Override

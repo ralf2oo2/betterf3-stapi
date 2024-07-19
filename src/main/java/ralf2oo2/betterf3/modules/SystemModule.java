@@ -54,7 +54,7 @@ public class SystemModule extends BaseModule{
         String gpuDriverVersion = String.join(" ", ArrayUtils.remove(versionSplit, 0));
 
         String cpuInfo = Utils.getProcessorInfo();
-        
+
         lines.get(0).setValue(javaVersion);
         lines.get(1).setValue(new Text( new TextSection(memoryUsage, Utils.getPercentColor((int) (usedMemory * 100 / maxMemory)))));
         lines.get(2).setValue(allocatedMemory);
