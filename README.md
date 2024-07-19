@@ -1,23 +1,40 @@
-# Fabric Example Mod with StationAPI and BIN Mappings for beta 1.7.3 server + client
+# BetterF3 StationAPI
 
-## Setup
+BetterF3 StationAPI is a port of [BetterF3](https://github.com/cominixo/BetterF3) to b1.7.3 [StationAPI](https://github.com/ModificationStation/StationAPI) based on the 1.16.2 version of the mod. It replaces Minecraft's original debug HUD with a highly customizable, more human-readable HUD.
 
-[See the StationAPI wiki.](https://github.com/ModificationStation/StationAPI/wiki)
+The mod icon is a combination of the BetterF3 created by [Nirewen](https://github.com/nirewen) and the StationAPI logo.
 
-## Common Issues
+## Features
+Each line is part of a Module, you can:
 
-**I get "Invalid source release: 17" as an error!**  
-Use Java 17. Open up `File > Project Structure` and change your SDK to Java 17.  
-If you still get the issue, you may need to go into `File > Settings > Build, Execution, Deployment > Build Tools > Gradle` and change the Java that Gradle uses too.
+- Change the colors of each module
+- Change the position of each module
+- Add and delete modules, as well as add spacings between them
+- Disable individual lines of a module, or disable the whole module
+- Add a shadow to the text rendered (Activated by default)
+- Change the color of the background behind all lines
+- Animations for opening/closing (with configurable speeds)
 
-**How do I stop server.properties from constantly changing?**  
-Remove the last line in the `gitignore` file.
+## Differences with the main mod
+Currently there is no option to change the scale of the debug HUD, this might be added at a later date.
 
-**My client hangs on a blank screen on trying to my test server!**  
-Open your `server.properties` and set `online-mode` to `false`.
+The modules available are:
+- MinecraftModule
+- FpsModule
+- SystemModule
+- TargetModule
+- CoordsModule
+- LocationModule
+- EmptyModule
 
-[Here for more issues.](https://github.com/calmilamsy/BIN-fabric-example-mod#common-issues)
+Others may be added later
 
-## License
+## Configuration
+You will need [ModMenu](https://github.com/calmilamsy/ModMenu) to configure the f3 menu.
 
-This template is available under the CC0 license. Feel free to learn from it and incorporate it in your own projects.
+## Requirements
+[StationAPI](https://github.com/ModificationStation/StationAPI) <br/>
+[ModMenu](https://github.com/calmilamsy/ModMenu)
+
+## Screenshots
+[![java-ZYEWr-D3n-MR.png](https://i.postimg.cc/W1z41gLQ/java-ZYEWr-D3n-MR.png)](https://postimg.cc/rD6ThdpJ)
