@@ -73,7 +73,7 @@ public class TargetModule extends BaseModule{
             lines.get(2).setValue(Integer.toString(minecraft.world.getBlockMeta(hitResult.blockX, hitResult.blockY, hitResult.blockZ)));
 
             if (FabricLoader.getInstance().isDevelopmentEnvironment()) {
-                BlockEntity entity = minecraft.world.method_1777(hitResult.blockX, hitResult.blockY, hitResult.blockZ);
+                BlockEntity entity = minecraft.world.getBlockEntity(hitResult.blockX, hitResult.blockY, hitResult.blockZ);
                 if (entity != null) {
                     String className = entity.getClass().getName();
                     lines.get(3).setValue(className.substring(className.lastIndexOf('.') + 1));

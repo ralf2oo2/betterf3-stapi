@@ -77,13 +77,13 @@ public class ModuleListWidget extends EntryListWidget {
     public void upClicked(int index){
         System.out.println(index);
         swapEntries(index, index - 1);
-        this.minecraft.soundManager.method_2009("random.click", 1.0F, 1.0F);
+        this.minecraft.soundManager.playSound("random.click", 1.0F, 1.0F);
     }
 
     public void downClicked(int index){
         System.out.println(index);
         swapEntries(index, index + 1);
-        this.minecraft.soundManager.method_2009("random.click", 1.0F, 1.0F);
+        this.minecraft.soundManager.playSound("random.click", 1.0F, 1.0F);
     }
 
     @Override

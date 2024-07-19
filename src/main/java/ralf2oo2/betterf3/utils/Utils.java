@@ -120,4 +120,23 @@ public class Utils {
     public static <T extends Comparable<T>> String getValueAsString(Property<T> property, Object value) {
         return property.name((T)value);
     }
+
+    public static String getDifficultyString(int difficulty){
+        String difficultyString = "";
+        switch (difficulty){
+            case 0:
+                difficultyString = "Peaceful";
+                break;
+            case 1:
+                difficultyString = "Easy";
+                break;
+            case 2:
+                difficultyString = "Normal";
+                break;
+            case 3:
+                difficultyString = "Hard";
+                break;
+        }
+        return difficultyString;
+    }
 }

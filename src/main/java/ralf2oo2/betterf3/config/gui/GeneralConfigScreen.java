@@ -72,7 +72,7 @@ public class GeneralConfigScreen extends ConfigScreen{
         backgroundColor.setValue(GeneralOptions.backgroundColor);
         configLines.add(backgroundColor);
 
-        ConfigLineWidget disableLagometer = new ConfigLineWidget(7, this, minecraft, InputTypeEnum.BOOLEAN, TranslationStorage.getInstance().get("config-betterf3-disable_lagometer"),
+        ConfigLineWidget disableLagometer = new ConfigLineWidget(7, this, minecraft, InputTypeEnum.BOOLEAN, TranslationStorage.getInstance().get("config.betterf3.disable_lagometer"),
                 newValue -> {
                     GeneralOptions.disableLagometer = (boolean)newValue;
                 });

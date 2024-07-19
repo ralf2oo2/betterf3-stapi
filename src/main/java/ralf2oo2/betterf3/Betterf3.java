@@ -14,10 +14,11 @@ public class Betterf3 {
         new MinecraftModule().init();
         new FpsModule().init();
         new CoordsModule().init();
-        new TargetModule().init(PositionEnum.RIGHT);
+        new LocationModule().init();
         BaseModule.modules.add(EmptyModule.INSTANCE);
 
         new SystemModule().init(PositionEnum.RIGHT);
+        new TargetModule().init(PositionEnum.RIGHT);
         BaseModule.modulesRight.add(EmptyModule.INSTANCE);
 
         ModConfigFile.load();

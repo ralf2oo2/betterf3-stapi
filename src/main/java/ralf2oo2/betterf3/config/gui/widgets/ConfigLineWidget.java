@@ -144,7 +144,7 @@ public class ConfigLineWidget {
             buttonState = 2;
             if(Mouse.isButtonDown(0)){
                 resetValue();
-                this.minecraft.soundManager.method_2009("random.click", 1.0F, 1.0F);
+                this.minecraft.soundManager.playSound("random.click", 1.0F, 1.0F);
             }
         }
 
@@ -226,7 +226,7 @@ public class ConfigLineWidget {
                 inputClicked = true;
                 ((IConfigLineParentHandler)parent).setFocusedId(this.id);
                 this.value = !(boolean)value;
-                this.minecraft.soundManager.method_2009("random.click", 1.0F, 1.0F);
+                this.minecraft.soundManager.playSound("random.click", 1.0F, 1.0F);
             }
         } else {
             inputClicked = false;

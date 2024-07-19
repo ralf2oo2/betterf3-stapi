@@ -1,7 +1,7 @@
 package ralf2oo2.betterf3.modules;
 
-import com.llamalad7.mixinextras.lib.apache.commons.ArrayUtils;
 import net.minecraft.client.Minecraft;
+import org.apache.commons.lang3.ArrayUtils;
 import org.lwjgl.opengl.GL11;
 import ralf2oo2.betterf3.utils.DebugLine;
 import ralf2oo2.betterf3.utils.Text;
