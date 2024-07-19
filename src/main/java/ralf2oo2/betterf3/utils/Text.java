@@ -1,7 +1,7 @@
 package ralf2oo2.betterf3.utils;
 
-import joptsimple.internal.Strings;
 import net.minecraft.client.resource.language.TranslationStorage;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -31,7 +31,7 @@ public class Text {
         if(textSections == null) return "";
         String string = "";
         for(int i = 0; i < textSections.length; i++){
-            if(!Strings.isNullOrEmpty(textSections[i].text)){
+            if(!StringUtils.isEmpty(textSections[i].text)){
                 string += textSections[i].text;
             }
         }

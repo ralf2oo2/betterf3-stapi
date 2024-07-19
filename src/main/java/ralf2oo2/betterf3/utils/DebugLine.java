@@ -1,7 +1,6 @@
 package ralf2oo2.betterf3.utils;
 
 import net.minecraft.client.resource.language.TranslationStorage;
-import net.modificationstation.stationapi.mixin.lang.TranslationStorageAccessor;
 
 import java.util.ArrayList;
 import java.util.List;

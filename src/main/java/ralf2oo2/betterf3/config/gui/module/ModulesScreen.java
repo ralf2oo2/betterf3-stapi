@@ -4,7 +4,6 @@ import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.resource.language.TranslationStorage;
 import ralf2oo2.betterf3.config.ModConfigFile;
-import ralf2oo2.betterf3.config.gui.ConfigScreen;
 import ralf2oo2.betterf3.config.gui.widgets.ModuleListWidget;
 import ralf2oo2.betterf3.modules.BaseModule;
 import ralf2oo2.betterf3.utils.IOnCloseHandler;

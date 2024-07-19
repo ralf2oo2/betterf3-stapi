@@ -1,19 +1,11 @@
 package ralf2oo2.betterf3.mixin;
 
 import net.minecraft.client.font.TextRenderer;
-import net.minecraft.client.option.GameOptions;
-import net.minecraft.util.CharacterUtils;
-import org.lwjgl.opengl.GL11;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import ralf2oo2.betterf3.utils.ITextRenderer;
 import ralf2oo2.betterf3.utils.Text;
 import ralf2oo2.betterf3.utils.TextSection;
-
-import java.nio.IntBuffer;
 
 @Mixin(TextRenderer.class)
 public abstract class TextRendererMixin implements ITextRenderer {
