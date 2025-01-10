@@ -1,8 +1,8 @@
 package ralf2oo2.betterf3.mixin;
-import net.minecraft.class_564;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.hud.InGameHud;
+import net.minecraft.client.util.ScreenScaler;
 import org.apache.commons.lang3.StringUtils;
 import org.spongepowered.asm.mixin.Debug;
 import org.spongepowered.asm.mixin.Mixin;
@@ -115,15 +115,15 @@ public class InGameHudMixin extends DrawContext {
 			if(!StringUtils.isEmpty(list.get(i).toString())){
 				int height = 9;
 				int width = minecraft.textRenderer.getWidth(list.get(i).toString());
-				class_564 scaledResolution = new class_564(this.minecraft.options, this.minecraft.displayWidth, this.minecraft.displayHeight);
-				int windowWidth = scaledResolution.method_1857() - 2 - width;
+				ScreenScaler scaledResolution = new ScreenScaler(this.minecraft.options, this.minecraft.displayWidth, this.minecraft.displayHeight);
+				int windowWidth = scaledResolution.getScaledWidth() - 2 - width;
 				if(GeneralOptions.enableAnimations){
 					windowWidth += Utils.xPos;
 				}
 				int y = 2 + height * i;
 
 				if(GeneralOptions.showBackground){
-					super.fill(windowWidth - 3, y - 1, scaledResolution.method_1857(), y + height - 1, GeneralOptions.backgroundColor);
+					super.fill(windowWidth - 3, y - 1, scaledResolution.getScaledWidth(), y + height - 1, GeneralOptions.backgroundColor);
 				}
 
 				if(GeneralOptions.shadowText){

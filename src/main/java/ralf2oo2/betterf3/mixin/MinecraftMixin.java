@@ -14,7 +14,7 @@ import ralf2oo2.betterf3.utils.IOnCloseHandler;
 public class MinecraftMixin {
     @Shadow public Screen currentScreen;
 
-    @Inject(at = @At(value = "HEAD"), method = "method_2111", cancellable = true)
+    @Inject(at = @At(value = "HEAD"), method = "renderProfilerChart", cancellable = true)
     private void betterf3_disableLagometer(CallbackInfo ci) {
         if(GeneralOptions.disableLagometer){
             ci.cancel();
