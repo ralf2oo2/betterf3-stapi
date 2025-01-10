@@ -1,6 +1,5 @@
 package ralf2oo2.betterf3.modules;
 
-import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.block.Block;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.client.Minecraft;
@@ -10,8 +9,6 @@ import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.hit.HitResultType;
 import net.minecraft.util.math.Vec3d;
 import net.modificationstation.stationapi.api.block.BlockState;
-import net.modificationstation.stationapi.api.event.registry.MobHandlerRegistryEvent;
-import net.modificationstation.stationapi.api.registry.MobHandlerRegistry;
 import ralf2oo2.betterf3.utils.*;
 
 import java.util.ArrayList;
