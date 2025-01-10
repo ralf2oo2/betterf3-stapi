@@ -36,19 +36,19 @@ public class CoordsModule extends BaseModule{
         Text xyz = Utils.getStyledText("X", colorX).append(Utils.getStyledText("Y", colorY).getSections()).append(Utils.getStyledText("Z", colorZ).getSections());
 
         String playerX = String.format("%.3f", minecraft.player.x);
-        String playerY = String.format("%.5f", minecraft.player.y - minecraft.player.eyeHeight);
+        String playerY = String.format("%.5f", minecraft.player.y - minecraft.player.standingEyeHeight);
         String playerZ = String.format("%.3f", minecraft.player.z);
 
         String blockX = Integer.toString((int)Math.floor(minecraft.player.x));
-        String blockY = Integer.toString((int)Math.floor(minecraft.player.y - minecraft.player.eyeHeight));
+        String blockY = Integer.toString((int)Math.floor(minecraft.player.y - minecraft.player.standingEyeHeight));
         String blockZ = Integer.toString((int)Math.floor(minecraft.player.z));
 
         String chunkRelativeX = Integer.toString((int)Math.floor(minecraft.player.x) & 15);
-        String chunkRelativeY = Integer.toString((int)Math.floor(minecraft.player.y - minecraft.player.eyeHeight) & 15);
+        String chunkRelativeY = Integer.toString((int)Math.floor(minecraft.player.y - minecraft.player.standingEyeHeight) & 15);
         String chunkRelativeZ = Integer.toString((int)Math.floor(minecraft.player.z) & 15);
 
         String chunkX = Integer.toString((int)Math.floor(minecraft.player.x) >> 4);
-        String chunkY = Integer.toString((int)Math.floor(minecraft.player.y - minecraft.player.eyeHeight) >> 4);
+        String chunkY = Integer.toString((int)Math.floor(minecraft.player.y - minecraft.player.standingEyeHeight) >> 4);
         String chunkZ = Integer.toString((int)Math.floor(minecraft.player.z) >> 4);
 
         // Player coords

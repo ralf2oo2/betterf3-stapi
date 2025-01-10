@@ -62,7 +62,7 @@ public class TargetModule extends BaseModule{
 
         Vec3d targetPos = Vec3d.create(targetX, targetY, targetZ);
 
-        HitResult hitResult = minecraft.world.method_162(playerPos, targetPos, true, true);
+        HitResult hitResult = minecraft.world.raycast(playerPos, targetPos, true, true);
         if(hitResult != null && hitResult.type == HitResultType.BLOCK){
             int id = minecraft.world.getBlockId(hitResult.blockX, hitResult.blockY, hitResult.blockZ);
             Block block = Block.BLOCKS[id];
@@ -97,8 +97,8 @@ public class TargetModule extends BaseModule{
                 lines.get(i).active = false;
             }
         }
-        if(minecraft.field_2823 != null  && minecraft.field_2823.type == HitResultType.ENTITY){
-            Entity entity = minecraft.field_2823.entity;
+        if(minecraft.crosshairTarget != null  && minecraft.crosshairTarget.type == HitResultType.ENTITY){
+            Entity entity = minecraft.crosshairTarget.entity;
             String entityId = EntityRegistry.getId(entity);
             lines.get(7).setValue(entityId);
         } else lines.get(7).active = false;

@@ -40,7 +40,7 @@ public class LocationModule extends BaseModule{
     }
     @Override
     public void update(Minecraft minecraft) {
-        String biome = minecraft.world.method_1781().method_1787(
+        String biome = minecraft.world.method_1781().getBiome(
             (int) Math.floor(minecraft.player.x),
             (int) Math.floor(minecraft.player.y)
         ).name;
@@ -72,7 +72,7 @@ public class LocationModule extends BaseModule{
         String pitch = String.format("%.1f", Utils.wrapDegrees(minecraft.player.pitch));
         lines.get(2).setValue(String.format(TranslationStorage.getInstance().get("format.betterf3.rotation"), yaw, pitch));
 
-        Chunk chunk = minecraft.world.method_199(
+        Chunk chunk = minecraft.world.getChunkFromPos(
             (int) Math.floor(minecraft.player.x),
             (int) Math.floor(minecraft.player.z)
         );
@@ -100,7 +100,7 @@ public class LocationModule extends BaseModule{
 
         lines.get(5).setValue(biome);
 
-        String difficulty = Utils.getDifficultyString(minecraft.world.field_213);
+        String difficulty = Utils.getDifficultyString(minecraft.world.difficulty);
         lines.get(6).setValue(difficulty);
 
         lines.get(7).setValue(String.valueOf((int)Math.floor(minecraft.world.getTime() / 24000)));

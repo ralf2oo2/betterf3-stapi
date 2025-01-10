@@ -21,7 +21,7 @@ public class EntityModule extends BaseModule{
     }
     @Override
     public void update(Minecraft minecraft) {
-        String entityString = minecraft.method_2142();
+        String entityString = minecraft.getRenderEntityDebugInfo();
 
         String part = entityString.split("\\.")[0];
         String renderedEntites = part.split("/")[0];
