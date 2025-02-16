@@ -10,7 +10,7 @@ import ralf2oo2.betterf3.utils.Utils;
 
 public class Betterf3 {
     @Entrypoint.Namespace
-    public static final Namespace MODID = Null.get();
+    public static Namespace MODID = Null.get();
     public Betterf3() {
         new MinecraftModule().init();
         new FpsModule().init();
