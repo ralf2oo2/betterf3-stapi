@@ -1,15 +1,13 @@
 package ralf2oo2.betterf3.mixin;
+import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.hud.InGameHud;
 import net.minecraft.client.util.ScreenScaler;
 import org.apache.commons.lang3.StringUtils;
-import org.spongepowered.asm.mixin.Debug;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import ralf2oo2.betterf3.config.GeneralOptions;
 import ralf2oo2.betterf3.modules.BaseModule;
 import ralf2oo2.betterf3.utils.ITextRenderer;
@@ -21,8 +19,8 @@ import java.util.List;
 
 @Mixin(InGameHud.class)
 public class InGameHudMixin extends DrawContext {
-	private boolean originalDebugHudValue;
 	@Shadow private Minecraft minecraft;
+	private boolean previousDebugHudValue = false;
 
 	public List<Text> getNewLeftText(){
 		List<Text> list = new ArrayList<>();
@@ -64,25 +62,30 @@ public class InGameHudMixin extends DrawContext {
 		return list;
 	}
 
-	@Debug(export = true)
-	@Inject(at = @At(value = "INVOKE", target = "Lorg/lwjgl/opengl/GL11;glEnable(I)V", ordinal = 2), method = "render", remap = false)
-	private void betterf3_beforeRenderDebug(CallbackInfo ci) {
-		if(GeneralOptions.disableMod) {
-			return;
+	@ModifyExpressionValue(
+			method = "render",
+			at = @At(value = "FIELD",
+					target = "Lnet/minecraft/client/option/GameOptions;debugHud:Z")
+	)
+	boolean betterf3_render(boolean original){
+		if (previousDebugHudValue != minecraft.options.debugHud) {
+			previousDebugHudValue = minecraft.options.debugHud;
+
+			if (minecraft.options.debugHud) {
+				Utils.closingAnimation = false;
+				Utils.xPos = Utils.START_X_POS;
+			} else {
+				Utils.closingAnimation = true;
+			}
 		}
-		originalDebugHudValue = minecraft.options.debugHud;
-		minecraft.options.debugHud = false;
+
 		betterf3_renderAnimation();
-		if(Utils.showDebug){
+		if((original && !GeneralOptions.disableMod) || Utils.closingAnimation && !GeneralOptions.disableMod){
 			betterf3_renderLeftText();
 			betterf3_renderRightText();
+			return false;
 		}
-	}
-
-	@Inject(at = @At(value = "TAIL"), method = "render")
-	private void betterf3_afterRender(CallbackInfo ci) {
-		if(GeneralOptions.disableMod) return;
-		minecraft.options.debugHud = originalDebugHudValue;
+		return original;
 	}
 
 	private void betterf3_renderLeftText(){
