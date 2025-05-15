@@ -42,7 +42,7 @@ public class LocationModule extends BaseModule{
     public void update(Minecraft minecraft) {
         String biome = minecraft.world.method_1781().getBiome(
             (int) Math.floor(minecraft.player.x),
-            (int) Math.floor(minecraft.player.y)
+            (int) Math.floor(minecraft.player.z)
         ).name;
 
         int lookDir = (MathHelper.floor(
