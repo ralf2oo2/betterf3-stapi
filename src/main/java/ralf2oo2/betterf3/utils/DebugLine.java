@@ -40,7 +40,7 @@ public class DebugLine {
             valueStyled = Utils.getStyledText((String)this.value, valueColor);
         }
 
-        if(this.value.toString().equals("")){
+        if(this.value == null || this.value.toString().equals("")){
             this.active = false;
         }
 
