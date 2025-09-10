@@ -1,12 +1,9 @@
 plugins {
 	id 'maven-publish'
-	id 'fabric-loom' version '1.9.2'
-	id 'babric-loom-extension' version '1.9.3'
+	id 'fabric-loom' version '1.11.7'
+	id 'babric-loom-extension' version '1.10.2'
 	id "com.github.johnrengelman.shadow" version "7.1.2"
 }
-
-sourceCompatibility = JavaVersion.VERSION_17
-targetCompatibility = JavaVersion.VERSION_17
 
 archivesBaseName = project.archives_base_name
 version = project.mod_version
@@ -89,7 +86,7 @@ dependencies {
 	modImplementation "net.modificationstation:StationAPI:${project.stapi_version}"
 
 	// Optional, but convenient mods for mod creators and users alike.
-	modImplementation("net.glasslauncher.mods:ModMenu:${project.modmenu_version}") {
+	modImplementation("net.danygames2014:modmenu:${project.modmenu_version}") {
 		transitive false
 	}
 //	modImplementation("com.github.paulevsGitch:VanillaBlockEnhancements:0.2.1") {
