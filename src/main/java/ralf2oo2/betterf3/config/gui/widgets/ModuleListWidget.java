@@ -75,13 +75,11 @@ public class ModuleListWidget extends EntryListWidget {
     }
 
     public void upClicked(int index){
-        System.out.println(index);
         swapEntries(index, index - 1);
         this.minecraft.soundManager.playSound("random.click", 1.0F, 1.0F);
     }
 
     public void downClicked(int index){
-        System.out.println(index);
         swapEntries(index, index + 1);
         this.minecraft.soundManager.playSound("random.click", 1.0F, 1.0F);
     }
@@ -175,7 +173,6 @@ public class ModuleListWidget extends EntryListWidget {
                             if(!hasClickedDown){
                                 hasClickedDown = true;
                                 downClicked(index);
-                                System.out.println("Clicked");
                             }
                         } else {
                             hasClickedDown = false;

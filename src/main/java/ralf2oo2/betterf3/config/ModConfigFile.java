@@ -2,6 +2,7 @@ package ralf2oo2.betterf3.config;
 
 import com.electronwill.nightconfig.core.Config;
 import com.electronwill.nightconfig.core.file.FileConfig;
+import net.fabricmc.loader.api.FabricLoader;
 import ralf2oo2.betterf3.modules.BaseModule;
 import ralf2oo2.betterf3.modules.CoordsModule;
 import ralf2oo2.betterf3.modules.EmptyModule;
@@ -15,7 +16,7 @@ import java.util.List;
 
 public class ModConfigFile {
     public static Runnable saveRunnable = () -> {
-        FileConfig config = FileConfig.builder(Paths.get("config/betterf3.json")).concurrent().autosave().build();
+        FileConfig config = FileConfig.builder(FabricLoader.getInstance().getConfigDir().resolve("betterf3.json")).concurrent().autosave().build();
 
         Config general = Config.inMemory();
         general.set("disable_mod", GeneralOptions.disableMod);
@@ -52,7 +53,7 @@ public class ModConfigFile {
     };
 
     public static void load(){
-        File file = new File("config/betterf3.json");
+        File file = FabricLoader.getInstance().getConfigDir().resolve("betterf3.json").toFile();
 
         if (!file.exists()) {
             return;
