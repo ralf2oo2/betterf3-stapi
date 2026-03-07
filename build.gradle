@@ -19,11 +19,12 @@ java {
 }
 
 loom {
-	mixin {
-		useLegacyMixinAp = true
+	if (project.hasProperty("accesswidener_name") && project.accesswidener_name.length() > 0) {
+		accessWidenerPath = file("src/main/resources/${project.accesswidener_name}.accesswidener")
 	}
-	customMinecraftManifest.set("https://babric.github.io/manifest-polyfill/${minecraft_version}.json")
-	intermediaryUrl.set("https://maven.glass-launcher.net/babric/babric/intermediary/%1\$s/intermediary-%1\$s-v2.jar")
+	mixin {
+		useLegacyMixinAp = false
+	}
 }
 
 repositories {
@@ -136,7 +137,7 @@ java {
 jar {
 	duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 	from("LICENSE") {
-		rename { "${it}_${project.archivesBaseName}"}
+		rename { "${it}_" + base.archivesName.get() }
 	}
 	from {
 		configurations.shadow.collect {
