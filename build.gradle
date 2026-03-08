@@ -135,6 +135,10 @@ processResources {
 	}
 }
 
+tasks.withType(Test).configureEach {
+	failOnNoDiscoveredTests = false
+}
+
 tasks.withType(JavaCompile).configureEach {
 	// Minecraft 1.18 (1.18-pre2) upwards uses Java 17.
 	// Loom also requires J17.
