@@ -3,14 +3,17 @@ package ralf2oo2.betterf3.config;
 import com.electronwill.nightconfig.core.Config;
 import com.electronwill.nightconfig.core.file.FileConfig;
 import net.fabricmc.loader.api.FabricLoader;
+import net.modificationstation.stationapi.api.util.Identifier;
+import org.jetbrains.annotations.Nullable;
+import ralf2oo2.betterf3.Betterf3;
 import ralf2oo2.betterf3.modules.BaseModule;
 import ralf2oo2.betterf3.modules.CoordsModule;
-import ralf2oo2.betterf3.modules.EmptyModule;
 import ralf2oo2.betterf3.modules.FpsModule;
+import ralf2oo2.betterf3.registry.ModuleRegistry;
 import ralf2oo2.betterf3.utils.DebugLine;
+import ralf2oo2.betterf3.utils.LegacyIdMap;
 
 import java.io.File;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,7 +33,7 @@ public class ModConfigFile {
 
         List<Config> configsLeft = new ArrayList<>();
 
-        for (BaseModule module : BaseModule.modules) {
+        for (BaseModule module : Betterf3.f3State.leftModules) {
 
             Config moduleConfig = saveModule(module);
 
@@ -39,7 +42,7 @@ public class ModConfigFile {
 
         List<Config> configsRight = new ArrayList<>();
 
-        for (BaseModule module : BaseModule.modulesRight) {
+        for (BaseModule module : Betterf3.f3State.rightModules) {
 
             Config moduleConfig = saveModule(module);
 
@@ -63,28 +66,32 @@ public class ModConfigFile {
 
         config.load();
 
-        List<BaseModule> modulesLeft = new ArrayList<>();
-        List<BaseModule> modulesRight = new ArrayList<>();
+        List<BaseModule> leftModules = new ArrayList<>();
+        List<BaseModule> rightModules = new ArrayList<>();
 
         List<Config> modulesLeftConfig = config.getOrElse("modules_left", () -> null);
 
         if (modulesLeftConfig != null) {
 
             for (Config moduleConfig : modulesLeftConfig) {
-                String moduleName = moduleConfig.getOrElse("name", null);
+                String moduleName = moduleConfig.getOrElse("name", () -> null);
+                String idString = moduleConfig.getOrElse("id", () -> null);
 
-                if (moduleName == null) {
+                if (moduleName == null && idString == null) {
                     continue;
                 }
 
                 BaseModule baseModule = ModConfigFile.loadModule(moduleConfig);
+                if(baseModule == null){
+                    continue;
+                }
 
-                modulesLeft.add(baseModule);
+                leftModules.add(baseModule);
             }
         }
 
-        if (!modulesLeft.isEmpty()) {
-            BaseModule.modules = modulesLeft;
+        if (!leftModules.isEmpty()) {
+            Betterf3.f3State.leftModules = leftModules;
         }
 
         List<Config> modulesRightConfig = config.getOrElse("modules_right", () -> null);
@@ -93,19 +100,23 @@ public class ModConfigFile {
             for (Config moduleConfig : modulesRightConfig) {
 
                 String moduleName = moduleConfig.getOrElse("name", () -> null);
+                String idString = moduleConfig.getOrElse("id", () -> null);
 
-                if (moduleName == null) {
+                if (moduleName == null && idString == null) {
                     continue;
                 }
 
                 BaseModule baseModule = ModConfigFile.loadModule(moduleConfig);
+                if(baseModule == null){
+                    continue;
+                }
 
-                modulesRight.add(baseModule);
+                rightModules.add(baseModule);
             }
         }
 
-        if (!modulesRight.isEmpty()) {
-            BaseModule.modulesRight = modulesRight;
+        if (!rightModules.isEmpty()) {
+            Betterf3.f3State.rightModules = rightModules;
         }
 
         Config general = config.getOrElse("general", () -> null);
@@ -124,14 +135,25 @@ public class ModConfigFile {
         config.close();
     }
 
+    @Nullable
     private static BaseModule loadModule(Config moduleConfig){
-        String moduleName = moduleConfig.getOrElse("name", null);
+        String moduleName = moduleConfig.getOrElse("name", () -> null);
+        String idString = moduleConfig.getOrElse("id", () -> null);
+        Identifier id = null;
+        if(moduleName != null && LegacyIdMap.LEGACY_ID_TO_ID.containsKey(moduleName)){
+            Betterf3.LOGGER.info("Loading legacy module '{}'", moduleName);
+            id = LegacyIdMap.LEGACY_ID_TO_ID.get(moduleName);
+        }
+        try{
+            id = Identifier.tryParse(idString);
+        } catch (Exception e){
+            Betterf3.LOGGER.error("Failed loading module '{}' from config, skipping...", idString);
+        }
 
-        BaseModule baseModule;
-        try {
-            baseModule = BaseModule.getModuleById(moduleName).getClass().newInstance();
-        } catch (InstantiationException | IllegalAccessException | NullPointerException e) {
-            baseModule = EmptyModule.INSTANCE;
+        BaseModule baseModule = ModuleRegistry.getInstance().createInstance(id);
+
+        if(baseModule == null){
+            return null;
         }
 
         Config lines = moduleConfig.getOrElse("lines", () -> null);
@@ -154,18 +176,14 @@ public class ModConfigFile {
             baseModule.valueColor = moduleConfig.getOrElse("value_color", baseModule.defaultNameColor);
         }
 
-        if (baseModule instanceof CoordsModule) {
-
-            CoordsModule coordsModule = (CoordsModule) baseModule;
+        if (baseModule instanceof CoordsModule coordsModule) {
 
             coordsModule.colorX = moduleConfig.getOrElse("color_x", coordsModule.defaultColorX);
             coordsModule.colorY = moduleConfig.getOrElse("color_y", coordsModule.defaultColorY);
             coordsModule.colorZ = moduleConfig.getOrElse("color_z", coordsModule.defaultColorZ);
         }
 
-        if (baseModule instanceof FpsModule) {
-
-            FpsModule fpsModule = (FpsModule) baseModule;
+        if (baseModule instanceof FpsModule fpsModule) {
 
             fpsModule.colorHigh = moduleConfig.getOrElse("color_high", fpsModule.defaultColorHigh);
             fpsModule.colorMed = moduleConfig.getOrElse("color_med", fpsModule.defaultColorMed);
@@ -187,7 +205,7 @@ public class ModConfigFile {
             lines.set(lineId, line.enabled);
         }
 
-        moduleConfig.set("name", module.id);
+        moduleConfig.set("id", module.id.toString());
 
         if (module.nameColor != null) {
             moduleConfig.set("name_color", module.nameColor);
@@ -196,8 +214,7 @@ public class ModConfigFile {
             moduleConfig.set("value_color", module.valueColor);
         }
 
-        if (module instanceof CoordsModule) {
-            CoordsModule coordsModule = (CoordsModule) module;
+        if (module instanceof CoordsModule coordsModule) {
             if (coordsModule.colorX != null) {
                 moduleConfig.set("color_x", coordsModule.colorX);
             }
@@ -209,8 +226,7 @@ public class ModConfigFile {
             }
         }
 
-        if (module instanceof FpsModule) {
-            FpsModule fpsModule = (FpsModule) module;
+        if (module instanceof FpsModule fpsModule) {
             if (fpsModule.colorHigh != null) {
                 moduleConfig.set("color_high", fpsModule.colorHigh);
             }

@@ -4,7 +4,7 @@ import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.resource.language.TranslationStorage;
 import ralf2oo2.betterf3.config.gui.module.ModulesScreen;
-import ralf2oo2.betterf3.utils.PositionEnum;
+import ralf2oo2.betterf3.utils.ModulePosition;
 
 public class ModConfigScreen extends Screen {
 
@@ -37,10 +37,10 @@ public class ModConfigScreen extends Screen {
     @Override
     protected void buttonClicked(ButtonWidget button) {
         if(button.id == 0){
-            minecraft.setScreen(new ModulesScreen(this, PositionEnum.LEFT));
+            minecraft.setScreen(new ModulesScreen(this, ModulePosition.LEFT));
         }
         if(button.id == 1){
-            minecraft.setScreen(new ModulesScreen(this, PositionEnum.RIGHT));
+            minecraft.setScreen(new ModulesScreen(this, ModulePosition.RIGHT));
         }
         if(button.id == 3){
             minecraft.setScreen(new GeneralConfigScreen(this));

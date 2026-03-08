@@ -2,9 +2,9 @@ package ralf2oo2.betterf3.modules;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resource.language.TranslationStorage;
+import net.modificationstation.stationapi.api.util.Identifier;
 import ralf2oo2.betterf3.utils.DebugLine;
 import ralf2oo2.betterf3.utils.DebugLineList;
-import ralf2oo2.betterf3.utils.PositionEnum;
 import ralf2oo2.betterf3.utils.Text;
 
 import java.util.ArrayList;
@@ -19,43 +19,14 @@ public abstract class BaseModule {
     public Integer defaultValueColor;
 
     public boolean enabled = true;
+    public boolean temporary = false;
 
     protected List<DebugLine> lines = new ArrayList<>();
-    public static List<BaseModule> modules = new ArrayList<>();
-    public static List<BaseModule> modulesRight = new ArrayList<>();
-    public static List<BaseModule> allModules = new ArrayList<>();
 
-    public String id = this.getClass().getSimpleName().replace("Module", "").toLowerCase();
+    public Identifier id;
 
-    public BaseModule(){
-
-    }
-
-    public BaseModule(boolean invisible){
-        if(!invisible){
-            allModules.add(this);
-        }
-    }
-
-    public void init(PositionEnum positionEnum){
-        switch (positionEnum){
-            case RIGHT:
-                modulesRight.add(this);
-                break;
-            case LEFT:
-                modules.add(this);
-                break;
-            case BOTH:
-                modulesRight.add(this);
-                modules.add(this);
-                break;
-        }
-        allModules.add(this);
-    }
-
-    public void init() {
-        modules.add(this);
-        allModules.add(this);
+    public BaseModule(Identifier id){
+        this.id = id;
     }
 
     public List<DebugLine> getLines() {
@@ -99,19 +70,6 @@ public abstract class BaseModule {
 
         return lineOptional.orElse(null);
     }
-
-    public static BaseModule getModule(String string) {
-        return BaseModule.allModules.stream().filter(baseModule -> baseModule.toString().equals(string)).findFirst().orElse(null);
-    }
-
-    public static BaseModule getModuleById(String id) {
-        return BaseModule.allModules.stream().filter(baseModule -> baseModule.id.equals(id)).findFirst().orElse(null);
-    }
-
-    public String toString() {
-        return TranslationStorage.getInstance().get("text.betterf3.module." + id);
-    }
-
 
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;

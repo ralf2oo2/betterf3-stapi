@@ -9,6 +9,7 @@ import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.hit.HitResultType;
 import net.minecraft.util.math.Vec3d;
 import net.modificationstation.stationapi.api.block.BlockState;
+import net.modificationstation.stationapi.api.util.Identifier;
 import ralf2oo2.betterf3.utils.*;
 
 import java.util.ArrayList;
@@ -16,7 +17,8 @@ import java.util.List;
 
 public class TargetModule extends BaseModule{
 
-    public TargetModule(){
+    public TargetModule(Identifier id){
+        super(id);
         this.defaultNameColor = 0x00aaff;
         this.defaultValueColor = 0xffff55;
 

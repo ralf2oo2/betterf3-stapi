@@ -1,6 +1,7 @@
 package ralf2oo2.betterf3.modules;
 
 import net.minecraft.client.Minecraft;
+import net.modificationstation.stationapi.api.util.Identifier;
 import ralf2oo2.betterf3.utils.DebugLine;
 import ralf2oo2.betterf3.utils.Text;
 import ralf2oo2.betterf3.utils.Utils;
@@ -16,7 +17,8 @@ public class CoordsModule extends BaseModule{
     public Integer defaultColorY = 0x55FF55;
     public Integer defaultColorZ = 0x55FFFF;
 
-    public CoordsModule(){
+    public CoordsModule(Identifier id){
+        super(id);
         this.defaultNameColor = 0xFF5555;
 
         this.nameColor = defaultNameColor;

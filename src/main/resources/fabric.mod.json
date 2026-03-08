@@ -26,6 +26,9 @@
     ],
     "modmenu": [
       "ralf2oo2.betterf3.Betterf3ModMenuApiImpl"
+    ],
+    "betterf3:event_bus_client": [
+      "ralf2oo2.betterf3.event.init.ModuleListener"
     ]
   },
   "mixins": [

@@ -4,6 +4,7 @@ import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.resource.language.TranslationStorage;
 import ralf2oo2.betterf3.config.gui.widgets.DropdownWidget;
+import ralf2oo2.betterf3.registry.ModuleRegistry;
 import ralf2oo2.betterf3.utils.IOnCloseHandler;
 
 public class AddModuleScreen extends Screen {
@@ -28,12 +29,8 @@ public class AddModuleScreen extends Screen {
     @Override
     protected void buttonClicked(ButtonWidget button) {
         if(button.id == 0){
-            try{
-                parent.modulesListWidget.addModule(dropdownWidget.getSelectedModule().getClass().newInstance());
-            } catch (InstantiationException | IllegalAccessException e){
-                parent.modulesListWidget.addModule(dropdownWidget.getSelectedModule());
-            }
-            ((IOnCloseHandler)parent).onClose();
+            parent.modulesListWidget.addModule(ModuleRegistry.getInstance().createInstance(dropdownWidget.getSelectedModule()));
+            parent.onClose();
             minecraft.setScreen(parent);
         }
     }

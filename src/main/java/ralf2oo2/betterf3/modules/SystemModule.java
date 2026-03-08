@@ -1,6 +1,7 @@
 package ralf2oo2.betterf3.modules;
 
 import net.minecraft.client.Minecraft;
+import net.modificationstation.stationapi.api.util.Identifier;
 import org.apache.commons.lang3.ArrayUtils;
 import org.lwjgl.opengl.GL11;
 import oshi.SystemInfo;
@@ -15,7 +16,8 @@ import java.awt.*;
 
 public class SystemModule extends BaseModule{
 
-    public SystemModule(){
+    public SystemModule(Identifier id){
+        super(id);
         this.defaultNameColor = 0xFFAA00;
         this.defaultValueColor = 0x55FFFF;
 

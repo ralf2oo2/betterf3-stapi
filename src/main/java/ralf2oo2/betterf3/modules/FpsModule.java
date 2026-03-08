@@ -1,6 +1,7 @@
 package ralf2oo2.betterf3.modules;
 
 import net.minecraft.client.Minecraft;
+import net.modificationstation.stationapi.api.util.Identifier;
 import ralf2oo2.betterf3.utils.DebugLine;
 import ralf2oo2.betterf3.utils.Text;
 import ralf2oo2.betterf3.utils.TextSection;
@@ -18,7 +19,8 @@ public class FpsModule extends BaseModule{
     public Integer defaultColorMed = 0xFFFF55;
     public Integer defaultColorLow = 0xFF5555;
 
-    public FpsModule(){
+    public FpsModule(Identifier id){
+        super(id);
         lines.add(new DebugLine("fps", "format.betterf3.fps", true));
         lines.get(0).inReducedDebug = true;
 

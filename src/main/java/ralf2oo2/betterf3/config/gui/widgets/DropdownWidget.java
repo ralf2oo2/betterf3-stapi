@@ -4,9 +4,12 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.resource.language.TranslationStorage;
+import net.modificationstation.stationapi.api.util.Identifier;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
 import ralf2oo2.betterf3.modules.BaseModule;
+import ralf2oo2.betterf3.registry.ModuleRegistry;
 
 import java.util.List;
 
@@ -17,7 +20,7 @@ public class DropdownWidget{
     private final int height;
     private final int x;
     private final int y;
-    private List<BaseModule> modules;
+    private final List<Identifier> modules;
     private boolean clickedOpen = false;
     private int selectedIndex = 0;
     private float scrollAmount = 0f;
@@ -31,19 +34,19 @@ public class DropdownWidget{
         this.x = x;
         this.y = y;
 
-        this.modules = BaseModule.allModules;
+        this.modules = ModuleRegistry.getInstance().ID_TO_FACTORY.keySet().stream().toList();
     }
 
     public int getItemCount(){
-        return (int) modules.stream().count();
+        return modules.size();
     }
 
-    public BaseModule getSelectedModule(){
+    public Identifier getSelectedModule(){
         return modules.get(selectedIndex);
     }
 
     private void handleMouseScrolling(){
-        this.scrollAmount += -Mouse.getDWheel() * 0.1;
+        this.scrollAmount += (float) (-Mouse.getDWheel() * 0.1);
         if(((getItemCount() + 1) * 20) < this.height - 20){
             this.scrollAmount = 0;
             return;
@@ -61,7 +64,6 @@ public class DropdownWidget{
             handleMouseScrolling();
         }
         DrawContext drawContext = new DrawContext();
-        TextRenderer textRenderer = minecraft.textRenderer;
         GL11.glBindTexture(3553, minecraft.textureManager.getTextureId("/gui/gui.png"));
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 
@@ -69,7 +71,10 @@ public class DropdownWidget{
 
         drawContext.drawTexture(this.x, this.y, 0, 46 + (isInBox ? 2 : 1) * 20, this.width / 2, 20);
         drawContext.drawTexture(this.x + this.width / 2, this.y, 200 - this.width / 2, 46 + (isInBox ? 2 : 1) * 20, this.width / 2, 20);
-        drawContext.drawCenteredTextWithShadow(minecraft.textRenderer, modules.get(selectedIndex).toString(), this.x + this.width / 2, this.y + 5, 0xFFFFFF);
+
+        String moduleName = TranslationStorage.getInstance().get(ModuleRegistry.getInstance().ID_TO_TRANSLATION_KEY.get(modules.get(selectedIndex)));
+
+        drawContext.drawCenteredTextWithShadow(minecraft.textRenderer, moduleName, this.x + this.width / 2, this.y + 5, 0xFFFFFF);
 
         if(Mouse.isButtonDown(0) && isInBox){
             if(!clickedOpen){
@@ -101,7 +106,8 @@ public class DropdownWidget{
                     drawContext.drawTexture(this.x, (this.y + (i * 20) - (int)Math.floor(scrollAmount)), 0, (46 + (isOnItem ? 2 : 0) * 20), this.width / 2, 20);
                     drawContext.drawTexture(this.x + this.width / 2, (this.y + (i * 20) - (int)Math.floor(scrollAmount)), 200 - this.width / 2, (46 + (isOnItem ? 2 : 0) * 20), this.width / 2, 20);
                     if(true){
-                        drawContext.drawCenteredTextWithShadow(minecraft.textRenderer, modules.get(i - 1).toString(), this.x + this.width / 2, (this.y + (i * 20) - (int)Math.floor(scrollAmount)) + 5, 0xFFFFFF);
+                        String name = TranslationStorage.getInstance().get(ModuleRegistry.getInstance().ID_TO_TRANSLATION_KEY.get(modules.get(i - 1)));
+                        drawContext.drawCenteredTextWithShadow(minecraft.textRenderer, name, this.x + this.width / 2, (this.y + (i * 20) - (int)Math.floor(scrollAmount)) + 5, 0xFFFFFF);
                     }
 
                     if(Mouse.isButtonDown(0) && isOnItem){

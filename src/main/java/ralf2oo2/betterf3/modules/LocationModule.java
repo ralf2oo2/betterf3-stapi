@@ -7,6 +7,7 @@ import net.minecraft.world.LightType;
 import net.minecraft.world.chunk.Chunk;
 import net.modificationstation.stationapi.api.registry.DimensionContainer;
 import net.modificationstation.stationapi.api.registry.DimensionRegistry;
+import net.modificationstation.stationapi.api.util.Identifier;
 import ralf2oo2.betterf3.utils.DebugLine;
 import ralf2oo2.betterf3.utils.Utils;
 
@@ -22,7 +23,8 @@ public class LocationModule extends BaseModule{
             "positive_z", "negative_x", "negative_z", "positive_x"
     };
 
-    public LocationModule(){
+    public LocationModule(Identifier id){
+        super(id);
         this.defaultNameColor = 0x00AA00;
         this.defaultValueColor = 0x55FFFF;
 

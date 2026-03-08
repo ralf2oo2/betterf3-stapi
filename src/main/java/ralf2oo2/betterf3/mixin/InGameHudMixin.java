@@ -7,7 +7,9 @@ import net.minecraft.client.util.ScreenScaler;
 import org.apache.commons.lang3.StringUtils;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
+import ralf2oo2.betterf3.Betterf3;
 import ralf2oo2.betterf3.config.GeneralOptions;
 import ralf2oo2.betterf3.modules.BaseModule;
 import ralf2oo2.betterf3.utils.ITextRenderer;
@@ -25,7 +27,7 @@ public class InGameHudMixin extends DrawContext {
 	public List<Text> getNewLeftText(){
 		List<Text> list = new ArrayList<>();
 
-		for (BaseModule module : BaseModule.modules) {
+		for (BaseModule module : Betterf3.f3State.leftModules) {
 			if (!module.enabled) {
 				continue;
 			}
@@ -45,7 +47,7 @@ public class InGameHudMixin extends DrawContext {
 	public List<Text> getNewRightText(){
 		List<Text> list = new ArrayList<>();
 
-		for (BaseModule module : BaseModule.modulesRight) {
+		for (BaseModule module : Betterf3.f3State.rightModules) {
 			if (!module.enabled) {
 				continue;
 			}
@@ -88,7 +90,8 @@ public class InGameHudMixin extends DrawContext {
 		return original;
 	}
 
-	private void betterf3_renderLeftText(){
+	@Unique
+    private void betterf3_renderLeftText(){
 		List<Text> list = getNewLeftText();
 		for(int i = 0; i < list.size(); i++){
 			if(!StringUtils.isEmpty(list.get(i).toString())){
@@ -112,7 +115,8 @@ public class InGameHudMixin extends DrawContext {
 			}
 		}
 	}
-	private void betterf3_renderRightText(){
+	@Unique
+    private void betterf3_renderRightText(){
 		List<Text> list = getNewRightText();
 		for(int i = 0; i < list.size(); i++){
 			if(!StringUtils.isEmpty(list.get(i).toString())){
@@ -137,7 +141,8 @@ public class InGameHudMixin extends DrawContext {
 			}
 		}
 	}
-	private void betterf3_renderAnimation(){
+	@Unique
+    private void betterf3_renderAnimation(){
 		long time = System.currentTimeMillis();
 
 		if(time - Utils.lastAnimationUpdate >= 10 && (Utils.xPos != 0 || Utils.closingAnimation)){

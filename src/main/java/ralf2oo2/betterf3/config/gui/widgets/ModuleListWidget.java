@@ -4,12 +4,14 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.widget.EntryListWidget;
 import net.minecraft.client.render.Tessellator;
+import net.minecraft.client.resource.language.TranslationStorage;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
 import ralf2oo2.betterf3.config.gui.module.ModulesScreen;
 import ralf2oo2.betterf3.modules.BaseModule;
 import ralf2oo2.betterf3.modules.CoordsModule;
 import ralf2oo2.betterf3.modules.FpsModule;
+import ralf2oo2.betterf3.registry.ModuleRegistry;
 import ralf2oo2.betterf3.utils.ITextRenderer;
 import ralf2oo2.betterf3.utils.Text;
 import ralf2oo2.betterf3.utils.Utils;
@@ -120,12 +122,12 @@ public class ModuleListWidget extends EntryListWidget {
         }
 
         public void render(int index, int x, int y, int l, Tessellator tesselator){
-            minecraft.textRenderer.draw(this.module.toString(), x + 32 + 3, y + 1, 0xffffff);
+            ModuleRegistry moduleRegistry = ModuleRegistry.getInstance();
+            minecraft.textRenderer.draw(TranslationStorage.getInstance().get(moduleRegistry.ID_TO_TRANSLATION_KEY.get(this.module.id)), x + 32 + 3, y + 1, 0xffffff);
             Text exampleText = new Text("");
 
             //TODO: add check for fps module
-            if (this.module instanceof CoordsModule){
-                CoordsModule coordsModule = (CoordsModule) this.module;
+            if (this.module instanceof CoordsModule coordsModule){
                 exampleText = Utils.getStyledText("X", coordsModule.colorX)
                         .append(Utils.getStyledText("Y", coordsModule.colorY).getSections())
                         .append(Utils.getStyledText("Z", coordsModule.colorZ).getSections())
@@ -133,8 +135,7 @@ public class ModuleListWidget extends EntryListWidget {
                         .append(Utils.getStyledText("100 ", coordsModule.colorX).getSections())
                         .append(Utils.getStyledText("200 ", coordsModule.colorY).getSections())
                         .append(Utils.getStyledText("300", coordsModule.colorZ).getSections());
-            } else if(this.module instanceof FpsModule){
-                FpsModule fpsModule = (FpsModule) this.module;
+            } else if(this.module instanceof FpsModule fpsModule){
                 exampleText = Utils.getStyledText("60 fps ", fpsModule.colorHigh)
                         .append(Utils.getStyledText("40 fps ", fpsModule.colorMed).getSections())
                         .append(Utils.getStyledText("10 fps", fpsModule.colorLow).getSections());

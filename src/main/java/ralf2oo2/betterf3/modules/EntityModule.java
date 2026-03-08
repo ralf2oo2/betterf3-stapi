@@ -1,6 +1,7 @@
 package ralf2oo2.betterf3.modules;
 
 import net.minecraft.client.Minecraft;
+import net.modificationstation.stationapi.api.util.Identifier;
 import ralf2oo2.betterf3.utils.DebugLine;
 import ralf2oo2.betterf3.utils.Utils;
 
@@ -10,7 +11,8 @@ public class EntityModule extends BaseModule{
 
     Integer totalColor = 0xFFAA00;
 
-    public EntityModule(){
+    public EntityModule(Identifier id){
+        super(id);
         this.defaultNameColor = 0xFF5555;
         this.defaultValueColor = 0xFFFF55;
 
