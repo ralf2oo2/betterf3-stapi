@@ -158,7 +158,7 @@ public class InGameHudMixin extends DrawContext {
 			}
 
 			if(Utils.closingAnimation){
-				if(!GeneralOptions.enableAnimations) Utils.showDebug = false;
+				if(!GeneralOptions.enableAnimations) Utils.xPos = 300;
 				Utils.xPos += i;
 				Utils.xPos *= GeneralOptions.animationSpeed;
 
