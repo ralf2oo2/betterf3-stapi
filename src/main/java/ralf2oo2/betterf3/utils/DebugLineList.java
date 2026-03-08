@@ -17,7 +17,7 @@ public class DebugLineList extends DebugLine{
     public List<Text> toTexts(final Integer nameColor, final Integer valueColor){
         final List<Text> texts = new ArrayList<>();
 
-        if(values.stream().count() > 0){
+        if((long) values.size() > 0){
             if(values.get(0) instanceof Text){
                 for(final Object v : this.values){
                     texts.add((Text)v);

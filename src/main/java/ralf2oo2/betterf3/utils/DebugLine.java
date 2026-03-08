@@ -1,6 +1,7 @@
 package ralf2oo2.betterf3.utils;
 
 import net.minecraft.client.resource.language.TranslationStorage;
+import net.modificationstation.stationapi.api.util.Namespace;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,6 +9,7 @@ import java.util.List;
 public class DebugLine {
     private Object value;
     private String format;
+    private String namespace = "betterf3";
     private final String id;
 
     public boolean active = true;
@@ -28,8 +30,18 @@ public class DebugLine {
         this.isCustom = isCustom;
     }
 
+    public DebugLine withNamespace(Namespace namespace){
+        this.namespace = namespace.toString();
+        return this;
+    }
+
+    public DebugLine withNamespace(String namespace){
+        this.namespace = namespace;
+        return this;
+    }
+
     public Text toText(Integer nameColor, Integer valueColor, Integer formatColor){
-        String name = this.getName();
+        String name = this.getTranslatedName();
 
         Text nameStyled = Utils.getStyledText(name, nameColor);
         Text valueStyled;
@@ -40,7 +52,7 @@ public class DebugLine {
             valueStyled = Utils.getStyledText((String)this.value, valueColor);
         }
 
-        if(this.value == null || this.value.toString().equals("")){
+        if(this.value == null || this.value.toString().isEmpty()){
             this.active = false;
         }
 
@@ -49,7 +61,7 @@ public class DebugLine {
 
     public Text toTextCustom(Integer nameColor, Integer formatColor) {
 
-        String name = this.getName();
+        String name = this.getTranslatedName();
 
         if (value instanceof List) {
             // format properly if value is a List (bad)
@@ -57,7 +69,7 @@ public class DebugLine {
             List<?> value = (List<?>) this.value;
 
 
-            if (!name.equals("")) {
+            if (!name.isEmpty()) {
                 values.add(Utils.getStyledText(name, nameColor));
             }
 
@@ -77,13 +89,13 @@ public class DebugLine {
         this.format = format;
     }
 
-    public String getName() {
+    public String getTranslatedName() {
         if (id.isEmpty()) {
             this.format = "%s%s";
             return "";
         }
         TranslationStorage translationStorage = TranslationStorage.getInstance();
-        return translationStorage.get("text.betterf3.line." + id);
+        return translationStorage.get("text." + namespace + ".line." + id);
     }
 
     public String getId() {

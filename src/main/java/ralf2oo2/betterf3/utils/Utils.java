@@ -3,6 +3,7 @@ package ralf2oo2.betterf3.utils;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.Minecraft;
 import net.modificationstation.stationapi.api.state.property.Property;
+import net.modificationstation.stationapi.api.util.Namespace;
 import oshi.SystemInfo;
 import oshi.hardware.CentralProcessor;
 
@@ -166,5 +167,9 @@ public class Utils {
         }
 
         return f;
+    }
+
+    public static String getTextTranslationKey(Namespace namespace, String objectName, String translationName){
+        return  "text." + namespace + "." + objectName +"." + translationName;
     }
 }
