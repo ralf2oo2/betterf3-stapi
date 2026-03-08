@@ -147,12 +147,13 @@ public class ModConfigFile {
         try{
             id = Identifier.tryParse(idString);
         } catch (Exception e){
-            Betterf3.LOGGER.error("Failed loading module '{}' from config, skipping...", idString);
+            Betterf3.LOGGER.warn("Failed parsing identifier '{}', skipping...", idString);
         }
 
         BaseModule baseModule = ModuleRegistry.getInstance().createInstance(id);
 
         if(baseModule == null){
+            Betterf3.LOGGER.warn("No module found with name '{}', skipping...", idString);
             return null;
         }
 
