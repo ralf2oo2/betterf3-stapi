@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "id": "betterf3test",
+  "version": "2.0.0",
+
+  "name": "Minecraft Zeta",
+  "description": "Minecraft Zeta is a total conversion mod aiming to reviatalize old minecraft versions by adding QoL changes and new content. ",
+  "authors": [
+    "ralf2oo2"
+  ],
+  "contact": {
+    "sources": "https://github.com/ralf2oo2/betterf3-stapi"
+  },
+
+  "license": "MIT",
+  "icon": "assets/betterf3test/icon.png",
+
+  "environment": "*",
+  "entrypoints": {
+    "stationapi:event_bus": [
+    ],
+    "stationapi:event_bus_client": [
+    ],
+    "stationapi:event_bus_server": [
+    ],
+    "betterf3:event_bus_client": [
+      "ralf2oo2.betterf3test.event.init.ModuleListener"
+    ]
+  },
+  "mixins": [
+    "betterf3test.mixins.json"
+  ],
+
+  "depends": {
+    "minecraft": "1.0.0-beta.7.3"
+  }
+}

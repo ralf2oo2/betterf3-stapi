@@ -16,7 +16,7 @@ public class ModuleRegisterEvent extends Event {
     }
 
     public void register(Identifier identifier, BaseModuleFactory factory, @Nullable ModulePosition defaultPosition, String translationName){
-        String translationKey = "text." + identifier.namespace.getName().toLowerCase(Locale.ENGLISH) + ".module." + translationName;
+        String translationKey = "text." + identifier.namespace + ".module." + translationName;
         registry.registerModule(identifier, factory, defaultPosition, translationKey);
     }
 }
