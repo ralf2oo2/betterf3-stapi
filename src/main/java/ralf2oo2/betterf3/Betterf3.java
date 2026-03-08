@@ -16,6 +16,7 @@ import ralf2oo2.betterf3.config.ModConfigFile;
 import ralf2oo2.betterf3.event.init.ModuleListener;
 import ralf2oo2.betterf3.registry.ModuleRegisterEvent;
 import ralf2oo2.betterf3.registry.ModuleRegistry;
+import ralf2oo2.betterf3.utils.LegacyIdMap;
 import ralf2oo2.betterf3.utils.ModulePosition;
 import ralf2oo2.betterf3.utils.Utils;
 
@@ -39,6 +40,8 @@ public class Betterf3 {
         StationAPI.EVENT_BUS.post(new ModuleRegisterEvent());
 
         setupDefaultModuleState(f3State);
+
+        LegacyIdMap.setup();
 
         ModConfigFile.load();
 

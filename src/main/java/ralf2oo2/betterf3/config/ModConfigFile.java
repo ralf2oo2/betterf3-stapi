@@ -140,15 +140,21 @@ public class ModConfigFile {
         String moduleName = moduleConfig.getOrElse("name", () -> null);
         String idString = moduleConfig.getOrElse("id", () -> null);
         Identifier id = null;
-        if(moduleName != null && LegacyIdMap.LEGACY_ID_TO_ID.containsKey(moduleName)){
+        if(moduleName != null){
+            if(!LegacyIdMap.LEGACY_ID_TO_ID.containsKey(moduleName)){
+                Betterf3.LOGGER.warn("No module for legacy name '{}', skipping...", moduleName);
+                return null;
+            }
             Betterf3.LOGGER.info("Loading legacy module '{}'", moduleName);
             id = LegacyIdMap.LEGACY_ID_TO_ID.get(moduleName);
+        } else {
+            try{
+                id = Identifier.tryParse(idString);
+            } catch (Exception e){
+                Betterf3.LOGGER.warn("Failed parsing identifier '{}', skipping...", idString);
+            }
         }
-        try{
-            id = Identifier.tryParse(idString);
-        } catch (Exception e){
-            Betterf3.LOGGER.warn("Failed parsing identifier '{}', skipping...", idString);
-        }
+
 
         BaseModule baseModule = ModuleRegistry.getInstance().createInstance(id);
 
