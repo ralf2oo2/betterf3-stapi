@@ -53,6 +53,7 @@ public class Betterf3 {
 
         state.leftModules.add(ModuleRegistry.getInstance().createInstance(ModuleListener.minecraftModule));
         state.leftModules.add(ModuleRegistry.getInstance().createInstance(ModuleListener.fpsModule));
+        state.leftModules.add(ModuleRegistry.getInstance().createInstance(ModuleListener.coordsModule));
         state.leftModules.add(ModuleRegistry.getInstance().createInstance(ModuleListener.locationModule));
         state.leftModules.add(ModuleRegistry.getInstance().createInstance(ModuleListener.entityModule));
 
