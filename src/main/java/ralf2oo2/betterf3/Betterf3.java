@@ -10,18 +10,19 @@ import net.modificationstation.stationapi.api.mod.entrypoint.Entrypoint;
 import net.modificationstation.stationapi.api.mod.entrypoint.EntrypointManager;
 import net.modificationstation.stationapi.api.util.Identifier;
 import net.modificationstation.stationapi.api.util.Namespace;
-import net.modificationstation.stationapi.api.util.Null;
 import org.apache.logging.log4j.Logger;
 import ralf2oo2.betterf3.config.ModConfigFile;
 import ralf2oo2.betterf3.event.init.ModuleListener;
 import ralf2oo2.betterf3.registry.ModuleRegisterEvent;
 import ralf2oo2.betterf3.registry.ModuleRegistry;
+import ralf2oo2.betterf3.tracking.AllocationTracker;
 import ralf2oo2.betterf3.utils.LegacyIdMap;
 import ralf2oo2.betterf3.utils.ModulePosition;
 import ralf2oo2.betterf3.utils.Utils;
 
 public class Betterf3 {
     public static final F3State f3State = new F3State();
+    public static final AllocationTracker allocationTracker = new AllocationTracker();
 
     @Entrypoint.Namespace
     public static Namespace NAMESPACE;
@@ -46,6 +47,8 @@ public class Betterf3 {
         ModConfigFile.load();
 
         Utils.getProcessorInfo();
+
+        allocationTracker.start();
     }
 
     public void setupDefaultModuleState(F3State state){

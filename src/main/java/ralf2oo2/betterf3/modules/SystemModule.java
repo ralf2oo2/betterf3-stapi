@@ -6,6 +6,8 @@ import org.apache.commons.lang3.ArrayUtils;
 import org.lwjgl.opengl.GL11;
 import oshi.SystemInfo;
 import oshi.hardware.CentralProcessor;
+import ralf2oo2.betterf3.Betterf3;
+import ralf2oo2.betterf3.tracking.AllocationTrackerSummary;
 import ralf2oo2.betterf3.utils.DebugLine;
 import ralf2oo2.betterf3.utils.Text;
 import ralf2oo2.betterf3.utils.TextSection;
@@ -26,6 +28,7 @@ public class SystemModule extends BaseModule{
 
         lines.add(new DebugLine("java_version"));
         lines.add(new DebugLine("memory_usage"));
+        lines.add(new DebugLine("allocation_rate"));
         lines.add(new DebugLine("allocated_memory"));
         lines.add(new DebugLine("cpu"));
         lines.add(new DebugLine("display"));
@@ -44,9 +47,14 @@ public class SystemModule extends BaseModule{
         long freeMemory = Runtime.getRuntime().freeMemory();
         long usedMemory = totalMemory - freeMemory;
 
+        AllocationTrackerSummary allocSummary = Betterf3.allocationTracker.getLatestSummary();
+        double totalAllocRate = allocSummary.totalAllocationRate();
+
         String javaVersion = String.format("%s %dbit", System.getProperty("java.version"), Utils.checkIs64Bit() ? 64 : 32);
         String memoryUsage = String.format("% 2d%% %03d/%03d MB", usedMemory * 100 / maxMemory, usedMemory / 1024 / 1024, maxMemory / 1024 / 1024);
         String allocatedMemory = String.format("% 2d%% %03dMB", totalMemory * 100 / maxMemory, totalMemory / 1024 / 1024);
+
+        String allocationRate = String.format(" %.1f MB/s", totalAllocRate);
 
         String displayInfo = String.format("%d x %d (%s)", minecraft.displayWidth, minecraft.displayHeight, GL11.glGetString(7936));
 
@@ -59,12 +67,13 @@ public class SystemModule extends BaseModule{
 
         lines.get(0).setValue(javaVersion);
         lines.get(1).setValue(new Text( new TextSection(memoryUsage, Utils.getPercentColor((int) (usedMemory * 100 / maxMemory)))));
-        lines.get(2).setValue(allocatedMemory);
-        lines.get(3).setValue(cpuInfo);
-        lines.get(4).setValue(displayInfo);
-        lines.get(5).setValue(GL11.glGetString(7937));
-        lines.get(6).setValue(openGlVersion);
-        lines.get(7).setValue(gpuDriverVersion);
+        lines.get(2).setValue(allocationRate);
+        lines.get(3).setValue(allocatedMemory);
+        lines.get(4).setValue(cpuInfo);
+        lines.get(5).setValue(displayInfo);
+        lines.get(6).setValue(GL11.glGetString(7937));
+        lines.get(7).setValue(openGlVersion);
+        lines.get(8).setValue(gpuDriverVersion);
 
     }
 }
